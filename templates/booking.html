@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Enter a booking</h3>
+<form action="" method="post">
+  <p><input type="text" placeholder="Film" name="film" value="{{ request.form.film }}" /></p>
+  <p><input type="text" placeholder="Program" name="program" value="{{ request.form.program }}" /></p>
+  <p><input type="number" placeholder="Guarantee" name="guarantee" value="{{ request.form.guarantee }}" /></p>
+  <p><input type="number" placeholder="Percentage" name="percentage" value="{{ request.form.percentage }}" /></p>
+  <p><input type="date" placeholder="Start Date" name="start_date" value="{{ request.form.start }}" /></p>
+  <p><input type="date" placeholder="End Date" name="end_date" value="{{ request.form.end }}" /></p>
+  <p><input type="text" placeholder="distributor" name="distributor" value="{{ request.form.distributor }}" /></p>
+  <p><input type="submit" value="Submit" /></p>
+</form>
+
+<p>Click <a href="/">here</a> to go home.</p>
+
+{% endblock %}
