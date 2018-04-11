@@ -1,22 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Welcome to Boar!</h1>
-<br />
-<p>Click <a href="/booking">here</a> to enter a booking.</p>
-<br />
-<p>Click <a href="/update">here</a> to update a booking.</p>
-<br />
-<h3>Open Bookings</h3>
-{% for booking in bookings %}
-  <strong>Film: </strong> {{ booking.film }} <br />
-  <strong>Program: </strong> {{booking.program }}<br />
-  <strong>Guarantee: </strong> {{ booking.guarantee }} <br />
-  <strong>Percentage: </strong> {{ booking.percentage }} <br />
-  <strong>Start: </strong> {{ booking.start_date }} <br />
-  <strong>End: </strong> {{ booking.end_date }} <br />
-  <strong>Distributor: </strong> {{booking.distributor }}<br />
-  <br />
-{% endfor %}
+<h2>Boar - Box Office Payments</h2>
+
+<a href="{{ url_for('.new_booking') }}">New Booking</a>
 
 {% endblock %}
