@@ -1,8 +1,8 @@
 # set up the database
 
-from sqlachlemy import create_engine
-from sqlachlemy.orm import scoped_session, sessionmaker
-from sqlachlemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 from config import database
 
 engine = create_engine(database)
