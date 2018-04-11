@@ -1,7 +1,8 @@
 # main.py
 
-from flask import Flask, render_template, request, redirect
 from app import app
+from db_setup import db_session
+from flask import Flask, flash, render_template, request, redirect
 from forms import DistributorForm
 from models import Distributor, Booking, Payment
 
@@ -42,6 +43,13 @@ def save_changes(distributor, form, new=False):
     distributor.city = form.city.data
     distributor.state = form.state.data
     distributor.zip = form.zip.data
+
+    if new:
+        # Add the new distributor to the database
+        db_session.add(distributor)
+
+    # commit the data to the database
+    db_session.commit()
 
 
 @app.route('/new_booking')

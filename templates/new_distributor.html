@@ -3,6 +3,20 @@
 
 <h2>New Distributor</h2>
 
+{% from "_formhelpers.html" import render_field  %}
+<form method=post>
+  <dl>
+    {{ render_field(form.company) }}
+    {{ render_field(form.payee) }}
+    {{ render_field(form.address1) }}
+    {{ render_field(form.address2) }}
+    {{ render_field(form.city) }}
+    {{ render_field(form.state) }}
+    {{ render_field(form.zip) }}
+  </dl>
+  <p><input type=submit value=Submit /></p>
+</form>
+
 <a href="{{ url_for('.index') }}">Cancel</a>
 
 {% endblock %}
