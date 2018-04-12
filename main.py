@@ -5,11 +5,28 @@ from db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
 from forms import DistributorForm, BookingForm
 from models import Distributor, Booking, Payment
+from tables import DistributorList
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/list_of_distributors')
+def list_distributors():
+    distributors = []
+    qry = db_session.query(Distributor)
+    distributors = qry.all()
+
+    if not distributors:
+        flash('No distributors found!')
+        return redirect('/')
+    else:
+        # display distributors
+        table = DistributorList(distributors)
+        table.border = True
+        return render_template('list_of_distributors.html', table=table)
 
 
 @app.route('/new_distributor', methods=['GET', 'POST'])
@@ -75,10 +92,11 @@ def save_booking(booking, form, new=False):
     """
     # Get data from form and assign it to the correct attributes
     # of the SQLAlchemy table object
-    distributor = Distributor()
-    distributor.company = form.distributor.data
+    # distributor = Distributor()
+    # distributor.company = form.distributor.data
 
-    booking.distributor = distributor
+    # booking.distributor = distributor
+    booking.distributor = form.distributor.data
     booking.film = form.film.data
     booking.program = form.program.data
     booking.guarantee = form.guarantee.data

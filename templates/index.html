@@ -7,6 +7,8 @@
 
 <p><a href="{{ url_for('.new_distributor') }}">New Distributor</a></p>
 
+<p><a href="{{ url_for('.list_distributors') }}">List Distributors</a></p>
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
