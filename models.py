@@ -15,7 +15,7 @@ class Distributor(db.Model):
     state = db.Column(db.String)
     zip = db.Column(db.String)
 
-    bookings = db.relationship('Booking', backref='distributor', lazy=True)
+    # bookings = db.relationship('Booking', backref='distributor', lazy=True)
 
     def __repr__(self):
         return '<Distributor {}>'.format(self.company)
@@ -35,6 +35,8 @@ class Booking(db.Model):
     settled = db.Column(db.Boolean, default=0)
 
     distributor_id = db.Column(db.Integer, db.ForeignKey('distributors.id'))
+    distributor = db.relationship('Distributor', backref=db.backref('bookings',
+                                  order_by=id), lazy=True)
 
     payments = db.relationship('Payment', backref='booking', lazy=True)
 

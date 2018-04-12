@@ -3,6 +3,21 @@
 
 <h2>New Booking</h2>
 
+{% from "_formhelpers.html" import render_field  %}
+<form method=post>
+  <dl>
+    {{ render_field(form.distributor) }}
+    {{ render_field(form.film) }}
+    {{ render_field(form.program) }}
+    {{ render_field(form.guarantee) }}
+    {{ render_field(form.percentage) }}
+    {{ render_field(form.start_date) }}
+    {{ render_field(form.end_date) }}
+    {{ render_field(form.gross) }}
+  </dl>
+  <p><input type=submit value=Submit /></p>
+</form>
+
 <a href="{{ url_for('.index') }}">Cancel</a>
 
 {% endblock %}

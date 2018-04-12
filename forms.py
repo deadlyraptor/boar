@@ -1,6 +1,7 @@
 # forms.py
 
-from wtforms import Form, StringField, SelectField, validators
+from wtforms import Form, StringField, IntegerField, SelectField, validators
+from wtforms.fields.html5 import DateField
 
 
 class DistributorForm(Form):
@@ -31,3 +32,14 @@ class DistributorForm(Form):
     city = StringField('City')
     state = SelectField('State', choices=states)
     zip = StringField('Zip')
+
+
+class BookingForm(Form):
+    distributor = StringField('Distributor')
+    film = StringField('Film')
+    program = StringField('Program')
+    guarantee = IntegerField('Guarantee')
+    percentage = IntegerField('Percentage')
+    start_date = DateField('Start Date')
+    end_date = DateField('End Date')
+    gross = IntegerField('Gross')
