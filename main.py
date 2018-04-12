@@ -92,11 +92,10 @@ def save_booking(booking, form, new=False):
     """
     # Get data from form and assign it to the correct attributes
     # of the SQLAlchemy table object
-    # distributor = Distributor()
-    # distributor.company = form.distributor.data
 
-    # booking.distributor = distributor
-    booking.distributor = form.distributor.data
+    distributor = db_session.query(Distributor).filter_by(company=form.distributor.data).first()
+
+    booking.distributor = distributor
     booking.film = form.film.data
     booking.program = form.program.data
     booking.guarantee = form.guarantee.data
