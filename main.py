@@ -16,7 +16,7 @@ def index():
 @app.route('/list_of_distributors')
 def list_distributors():
     distributors = []
-    qry = db_session.query(Distributor)
+    qry = db_session.query(Distributor).order_by(Distributor.company)
     distributors = qry.all()
 
     if not distributors:
