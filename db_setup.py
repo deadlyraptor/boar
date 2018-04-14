@@ -13,7 +13,10 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 
-from app import db
-import models
+def init_db():
+    from app import db
+    import models
+    db.create_all()
 
-db.create_all()
+
+init_db()

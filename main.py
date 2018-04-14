@@ -29,6 +29,23 @@ def list_distributors():
         return render_template('list_of_distributors.html', table=table)
 
 
+@app.route('/item/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    qry = db_session.query(Distributor).filter(Distributor.id == id)
+    distributor = qry.first()
+
+    if distributor:
+        form = DistributorForm(formdata=request.form, obj=distributor)
+        if request.method == 'POST' and form.validate():
+            # save edits
+            save_distributor(distributor, form)
+            flash('Distributor updated successfully!')
+            return redirect('/')
+        return render_template('edit_distributor.html', form=form)
+    else:
+        return 'Error loading #{id}'.format(id=id)
+
+
 @app.route('/new_distributor', methods=['GET', 'POST'])
 def new_distributor():
     """
@@ -93,7 +110,8 @@ def save_booking(booking, form, new=False):
     # Get data from form and assign it to the correct attributes
     # of the SQLAlchemy table object
 
-    distributor = db_session.query(Distributor).filter_by(company=form.distributor.data).first()
+    distributor = db_session.query(Distributor).filter_by(
+                                         company=form.distributor.data).first()
 
     booking.distributor = distributor
     booking.film = form.film.data
