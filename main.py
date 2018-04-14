@@ -29,7 +29,7 @@ def list_distributors():
         return render_template('list_of_distributors.html', table=table)
 
 
-@app.route('/item/<int:id>', methods=['GET', 'POST'])
+@app.route('/distributor/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     qry = db_session.query(Distributor).filter(Distributor.id == id)
     distributor = qry.first()
@@ -130,3 +130,7 @@ def save_booking(booking, form, new=False):
     db_session.commit()
 
     return render_template('new_booking.html', form=form)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
