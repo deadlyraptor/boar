@@ -45,3 +45,10 @@ class BookingForm(Form):
     start_date = DateField('Start Date', default=datetime.today)
     end_date = DateField('End Date', default=datetime.today)
     gross = IntegerField('Gross')
+
+
+class PaymentForm(Form):
+    booking = StringField('Booking')
+    date = DateField('Date', default=datetime.today)
+    check_number = StringField('Check Number')
+    amount = IntegerField('Amount')

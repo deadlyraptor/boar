@@ -3,7 +3,7 @@
 from app import app
 from db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
-from forms import DistributorForm, BookingForm
+from forms import DistributorForm, BookingForm, PaymentForm
 from models import Distributor, Booking, Payment
 from tables import DistributorList, Bookings
 
@@ -164,6 +164,39 @@ def update(id):
         return render_template('update_booking.html', form=form)
     else:
         return 'Error loading #{id}'.format(id=id)
+
+
+@app.route('/enter_payment', methods=['GET', 'POST'])
+def enter_payment():
+    """
+    Enter a payment.
+    """
+    form = PaymentForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        # save the payment
+        payment = Payment()
+        save_payment(payment, form, new=True)
+        flash('Payment entered successfully!')
+        return redirect('/')
+
+    return render_template('enter_payment.html', form=form)
+
+
+def save_payment(payment, form, new=False):
+    """
+    Save changes to the database
+    """
+    booking = db_session.query(Booking).filter_by(
+                                    film=form.booking.data).first()
+    payment.booking = booking
+    payment.date = form.date.data
+    payment.check_number = form.check_number.data
+    payment.amount = form.amount.data
+
+    if new:
+        db_session.add(payment)
+    db_session.commit()
 
 
 if __name__ == '__main__':
