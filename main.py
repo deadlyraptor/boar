@@ -148,5 +148,22 @@ def open_bookings():
         return render_template('open_bookings.html', table=table)
 
 
+@app.route('/booking/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    qry = db_session.query(Booking).filter(Booking.id == id)
+    booking = qry.first()
+
+    if booking:
+        form = BookingForm(formdata=request.form, obj=booking)
+        if request.method == 'POST' and form.validate():
+            # save data
+            save_booking(booking, form)
+            flash('Booking updated successfully!')
+            return redirect('/')
+        return render_template('update_booking.html', form=form)
+    else:
+        return 'Error loading #{id}'.format(id=id)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
