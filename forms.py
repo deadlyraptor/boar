@@ -3,6 +3,7 @@
 from wtforms import Form, StringField, IntegerField, SelectField, validators
 from wtforms.fields.html5 import DateField
 from datetime import datetime
+from config import programs
 
 
 class DistributorForm(Form):
@@ -38,7 +39,7 @@ class DistributorForm(Form):
 class BookingForm(Form):
     distributor = StringField('Distributor')
     film = StringField('Film')
-    program = StringField('Program')
+    program = SelectField('Program', choices=programs)
     guarantee = IntegerField('Guarantee')
     percentage = IntegerField('Percentage')
     start_date = DateField('Start Date', default=datetime.today)

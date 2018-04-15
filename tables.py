@@ -23,5 +23,4 @@ class Bookings(Table):
     percentage = Col('Percentage')
     gross = Col('Gross')
     distributor = Col('Distributor')
-    settled = Col('Settled?')
     update = LinkCol('Update', 'update', url_kwargs=dict(id='id'))

@@ -135,7 +135,8 @@ def save_booking(booking, form, new=False):
 @app.route('/open_bookings')
 def open_bookings():
     bookings = []
-    qry = db_session.query(Booking).filter(Booking.settled == 0)
+    qry = db_session.query(Booking).order_by(
+                            Booking.start_date).filter(Booking.settled == 0)
     bookings = qry.all()
 
     if not bookings:
