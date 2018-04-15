@@ -5,7 +5,7 @@ from db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
 from forms import DistributorForm, BookingForm
 from models import Distributor, Booking, Payment
-from tables import DistributorList
+from tables import DistributorList, Bookings
 
 
 @app.route('/')
@@ -130,6 +130,22 @@ def save_booking(booking, form, new=False):
     db_session.commit()
 
     return render_template('new_booking.html', form=form)
+
+
+@app.route('/open_bookings')
+def open_bookings():
+    bookings = []
+    qry = db_session.query(Booking).filter(Booking.settled == 0)
+    bookings = qry.all()
+
+    if not bookings:
+        flash('No open bookings found!')
+        return redirect('/')
+    else:
+        # display open bookings
+        table = Bookings(bookings)
+        table.border = True
+        return render_template('open_bookings.html', table=table)
 
 
 if __name__ == '__main__':
