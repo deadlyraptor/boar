@@ -5,7 +5,7 @@ from db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
 from forms import DistributorForm, BookingForm, PaymentForm
 from models import Distributor, Booking, Payment
-from tables import DistributorList, Bookings
+from tables import DistributorList, Bookings, Payments
 
 
 @app.route('/')
@@ -197,6 +197,24 @@ def save_payment(payment, form, new=False):
     if new:
         db_session.add(payment)
     db_session.commit()
+
+
+@app.route('/payments/<int:id>')
+def view_payments(id):
+    """
+    View payments.
+    """
+    payments = []
+    qry = db_session.query(Payment).filter(Payment.booking_id == id)
+    payments = qry.all()
+
+    if not payments:
+        flash('No payments found!')
+        return redirect('/open_bookings')
+    else:
+        table = Payments(payments)
+        table.border = True
+        return render_template('payments.html', table=table)
 
 
 if __name__ == '__main__':

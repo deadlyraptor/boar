@@ -1,4 +1,4 @@
-from flask_table import Table, Col, LinkCol
+from flask_table import Table, Col, LinkCol, DateCol
 
 
 class DistributorList(Table):
@@ -24,5 +24,15 @@ class Bookings(Table):
     gross = Col('Gross')
     distributor = Col('Distributor')
     update = LinkCol('Update', 'update', url_kwargs=dict(id='id'))
-    payment = LinkCol('Enter Payment', 'enter_payment',
-                      url_kwargs=dict(id='id'))
+    enter_payment = LinkCol('Enter Payment', 'enter_payment',
+                            url_kwargs=dict(id='id'))
+    view_payments = LinkCol('View Payments', 'view_payments',
+                            url_kwargs=dict(id='id'))
+
+
+class Payments(Table):
+    id = Col('Id', show=False)
+    booking = Col('Booking')
+    date = DateCol('Date')
+    check_number = Col('Check Number')
+    amount = Col('Amount')
