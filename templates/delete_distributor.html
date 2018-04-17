@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Edit Distributor</h2>
+<h2>Delete Distributor</h2>
 
 {% from "_formhelpers.html" import render_field  %}
 <form method=post>
@@ -14,7 +14,7 @@
     {{ render_field(form.state) }}
     {{ render_field(form.zip) }}
   </dl>
-  <p><input type=submit value=Submit /></p>
+  <p><input type=submit value=Delete /></p>
 </form>
 
 <p><a href="{{ url_for('.index') }}">Cancel</a></p>

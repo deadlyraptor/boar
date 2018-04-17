@@ -13,39 +13,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/list_of_distributors')
-def list_distributors():
-    distributors = []
-    qry = db_session.query(Distributor).order_by(Distributor.company)
-    distributors = qry.all()
-
-    if not distributors:
-        flash('No distributors found!')
-        return redirect('/')
-    else:
-        # display distributors
-        table = DistributorList(distributors)
-        table.border = True
-        return render_template('list_of_distributors.html', table=table)
-
-
-@app.route('/distributor/<int:id>', methods=['GET', 'POST'])
-def edit(id):
-    qry = db_session.query(Distributor).filter(Distributor.id == id)
-    distributor = qry.first()
-
-    if distributor:
-        form = DistributorForm(formdata=request.form, obj=distributor)
-        if request.method == 'POST' and form.validate():
-            # save edits
-            save_distributor(distributor, form)
-            flash('Distributor updated successfully!')
-            return redirect('/')
-        return render_template('edit_distributor.html', form=form)
-    else:
-        return 'Error loading #{id}'.format(id=id)
-
-
 @app.route('/new_distributor', methods=['GET', 'POST'])
 def new_distributor():
     """
@@ -84,6 +51,61 @@ def save_distributor(distributor, form, new=False):
 
     # commit the data to the database
     db_session.commit()
+
+
+@app.route('/list_of_distributors')
+def list_distributors():
+    distributors = []
+    qry = db_session.query(Distributor).order_by(Distributor.company)
+    distributors = qry.all()
+
+    if not distributors:
+        flash('No distributors found!')
+        return redirect('/')
+    else:
+        # display distributors
+        table = DistributorList(distributors)
+        table.border = True
+        return render_template('list_of_distributors.html', table=table)
+
+
+@app.route('/distributor/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    qry = db_session.query(Distributor).filter(Distributor.id == id)
+    distributor = qry.first()
+
+    if distributor:
+        form = DistributorForm(formdata=request.form, obj=distributor)
+        if request.method == 'POST' and form.validate():
+            # save edits
+            save_distributor(distributor, form)
+            flash('Distributor updated successfully!')
+            return redirect('/')
+        return render_template('edit_distributor.html', form=form)
+    else:
+        return 'Error loading #{id}'.format(id=id)
+
+
+@app.route('/delete_distributor/<int:id>', methods=['GET', 'POST'])
+def delete_distributor(id):
+    """
+    Delete the item in the database that matches the specified ID in the URL
+    """
+    qry = db_session.query(Distributor).filter(Distributor.id == id)
+    distributor = qry.first()
+
+    if distributor:
+        form = DistributorForm(formdata=request.form, obj=distributor)
+        if request.method == 'POST' and form.validate():
+            # delete the item from the database
+            db_session.delete(distributor)
+            db_session.commit()
+
+            flash('Distributor deleted successfully!')
+            return redirect('/')
+        return render_template('delete_distributor.html', form=form)
+    else:
+        return 'Error deleting #{id}'.format(id=id)
 
 
 @app.route('/new_booking', methods=['GET', 'POST'])
@@ -164,6 +186,28 @@ def update(id):
         return render_template('update_booking.html', form=form)
     else:
         return 'Error loading #{id}'.format(id=id)
+
+
+@app.route('/delete_booking/<int:id>', methods=['GET', 'POST'])
+def delete_booking(id):
+    """
+    Delete the item in the database that matches the specified ID in the URL
+    """
+    qry = db_session.query(Booking).filter(Booking.id == id)
+    booking = qry.first()
+
+    if booking:
+        form = BookingForm(formdata=request.form, obj=booking)
+        if request.method == 'POST' and form.validate():
+            # delete the item from the database
+            db_session.delete(booking)
+            db_session.commit()
+
+            flash('Booking deleted successfully!')
+            return redirect('/')
+        return render_template('delete_booking.html', form=form)
+    else:
+        return 'Error deleting #{id}'.format(id=id)
 
 
 @app.route('/enter_payment/<int:id>', methods=['GET', 'POST'])

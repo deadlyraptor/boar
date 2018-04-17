@@ -11,6 +11,7 @@ class DistributorList(Table):
     state = Col('State')
     zip = Col('Zip')
     edit = LinkCol('Edit', 'edit', url_kwargs=dict(id='id'))
+    delete = LinkCol('Delete', 'delete_distributor', url_kwargs=dict(id='id'))
 
 
 class Bookings(Table):
@@ -28,6 +29,7 @@ class Bookings(Table):
                             url_kwargs=dict(id='id'))
     view_payments = LinkCol('View Payments', 'view_payments',
                             url_kwargs=dict(id='id'))
+    delete = LinkCol('Delete', 'delete_booking', url_kwargs=dict(id='id'))
 
 
 class Payments(Table):
