@@ -24,3 +24,5 @@ class Bookings(Table):
     gross = Col('Gross')
     distributor = Col('Distributor')
     update = LinkCol('Update', 'update', url_kwargs=dict(id='id'))
+    payment = LinkCol('Enter Payment', 'enter_payment',
+                      url_kwargs=dict(id='id'))

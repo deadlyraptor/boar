@@ -166,8 +166,8 @@ def update(id):
         return 'Error loading #{id}'.format(id=id)
 
 
-@app.route('/enter_payment', methods=['GET', 'POST'])
-def enter_payment():
+@app.route('/enter_payment/<int:id>', methods=['GET', 'POST'])
+def enter_payment(id):
     """
     Enter a payment.
     """
@@ -178,7 +178,7 @@ def enter_payment():
         payment = Payment()
         save_payment(payment, form, new=True)
         flash('Payment entered successfully!')
-        return redirect('/')
+        return redirect('/open_bookings')
 
     return render_template('enter_payment.html', form=form)
 
