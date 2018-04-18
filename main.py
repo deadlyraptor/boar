@@ -12,6 +12,8 @@ from tables import DistributorList, Bookings, Payments
 def index():
     return render_template('index.html')
 
+# distributor routes
+
 
 @app.route('/new_distributor', methods=['GET', 'POST'])
 def new_distributor():
@@ -106,6 +108,8 @@ def delete_distributor(id):
         return render_template('delete_distributor.html', form=form)
     else:
         return 'Error deleting #{id}'.format(id=id)
+
+# booking routes
 
 
 @app.route('/new_booking', methods=['GET', 'POST'])
@@ -208,6 +212,8 @@ def delete_booking(id):
         return render_template('delete_booking.html', form=form)
     else:
         return 'Error deleting #{id}'.format(id=id)
+
+# payment routes
 
 
 @app.route('/enter_payment/<int:id>', methods=['GET', 'POST'])

@@ -42,8 +42,8 @@ class BookingForm(Form):
     program = SelectField('Program', choices=programs)
     guarantee = IntegerField('Guarantee')
     percentage = IntegerField('Percentage')
-    start_date = DateField('Start Date', default=datetime.today)
-    end_date = DateField('End Date', default=datetime.today)
+    start_date = DateField('Start Date', default=datetime.utcnow)
+    end_date = DateField('End Date', default=datetime.utcnow)
     gross = IntegerField('Gross')
 
 

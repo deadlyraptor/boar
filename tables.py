@@ -17,8 +17,8 @@ class DistributorList(Table):
 class Bookings(Table):
     id = Col('Id', show=False)
     film = Col('Film')
-    start_date = Col('Start Date')
-    end_date = Col('End Date')
+    start_date = DateCol('Start Date')
+    end_date = DateCol('End Date')
     program = Col('Program')
     guarantee = Col('Guarantee')
     percentage = Col('Percentage')
