@@ -23,6 +23,8 @@ class Bookings(Table):
     guarantee = Col('Guarantee')
     percentage = Col('Percentage')
     gross = Col('Gross')
+    view_results = LinkCol('View Results', 'view_results',
+                           url_kwargs=dict(id='id'))
     distributor = Col('Distributor')
     update = LinkCol('Update', 'update', url_kwargs=dict(id='id'))
     enter_payment = LinkCol('Enter Payment', 'enter_payment',
@@ -38,3 +40,10 @@ class Payments(Table):
     date = DateCol('Date')
     check_number = Col('Check Number')
     amount = Col('Amount')
+
+
+class Results(Table):
+    film = Col('Film')
+    overage = Col('Overage')
+    owed = Col('Owed')
+    net = Col('Net')

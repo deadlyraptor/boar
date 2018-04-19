@@ -51,3 +51,6 @@ class Payment(db.Model):
     amount = db.Column(db.Integer)
 
     booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'))
+
+    def __repr__(self):
+        return '<Payment {}>'.format(self.booking_id)
