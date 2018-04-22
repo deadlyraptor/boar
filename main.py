@@ -226,20 +226,22 @@ def enter_payment(id):
     if request.method == 'POST' and form.validate():
         # save the payment
         payment = Payment()
-        save_payment(payment, form, new=True)
+        save_payment(payment, form, id, new=True)
         flash('Payment entered successfully!')
         return redirect('/open_bookings')
 
     return render_template('enter_payment.html', form=form)
 
 
-def save_payment(payment, form, new=False):
+def save_payment(payment, form, id, new=False):
     """
     Save changes to the database
     """
-    booking = db_session.query(Booking).filter_by(
-                                    film=form.booking.data).first()
-    payment.booking = booking.film
+    # booking = db_session.query(Booking).filter_by(
+    #                                film=form.booking.data).first()
+    booking = db_session.query(Booking).filter(Booking.id == id).first()
+
+    payment.booking = booking
     payment.date = form.date.data
     payment.check_number = form.check_number.data
     payment.amount = form.amount.data
