@@ -1,7 +1,7 @@
 from flask_table import Table, Col, LinkCol, DateCol
 
 
-class DistributorList(Table):
+class Distributors(Table):
     id = Col('Id', show=False)
     company = Col('Company')
     payee = Col('Payee')

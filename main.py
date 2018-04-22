@@ -3,9 +3,9 @@
 from app import app
 from db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
-from forms import DistributorForm, BookingForm, PaymentForm
 from models import Distributor, Booking, Payment
-from tables import DistributorList, Bookings, Payments, Results
+from forms import DistributorForm, BookingForm, PaymentForm
+from tables import Distributors, Bookings, Payments, Results
 
 
 @app.route('/')
@@ -55,7 +55,7 @@ def save_distributor(distributor, form, new=False):
     db_session.commit()
 
 
-@app.route('/list_of_distributors')
+@app.route('/distributors')
 def list_distributors():
     distributors = []
     qry = db_session.query(Distributor).order_by(Distributor.company)
@@ -66,9 +66,9 @@ def list_distributors():
         return redirect('/')
     else:
         # display distributors
-        table = DistributorList(distributors)
+        table = Distributors(distributors)
         table.border = True
-        return render_template('list_of_distributors.html', table=table)
+        return render_template('distributors.html', table=table)
 
 
 @app.route('/distributor/<int:id>', methods=['GET', 'POST'])
