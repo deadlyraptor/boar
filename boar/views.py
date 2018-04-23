@@ -320,7 +320,3 @@ def view_results(id):
         table = Results(finances)
         table.border = True
         return render_template('results.html', table=table)
-
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
