@@ -1,11 +1,11 @@
 # main.py
 
-from app import app
-from db_setup import db_session
+from boar import app
+from .db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
-from models import Distributor, Booking, Payment
-from forms import DistributorForm, BookingForm, PaymentForm
-from tables import Distributors, Bookings, Payments, Results
+from .models import Distributor, Booking, Payment
+from .forms import DistributorForm, BookingForm, PaymentForm
+from .tables import Distributors, Bookings, Payments, Results
 
 
 @app.route('/')
@@ -322,5 +322,5 @@ def view_results(id):
         return render_template('results.html', table=table)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
