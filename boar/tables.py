@@ -1,3 +1,5 @@
+# tables.py
+
 from flask_table import Table, Col, LinkCol, DateCol
 
 

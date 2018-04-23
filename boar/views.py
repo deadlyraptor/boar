@@ -1,4 +1,4 @@
-# main.py
+# views.py
 
 from boar import app
 from .db_setup import db_session
