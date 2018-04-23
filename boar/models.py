@@ -1,6 +1,6 @@
 # models.py
 
-from app import db
+from boar import db
 
 
 class Distributor(db.Model):

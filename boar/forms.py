@@ -3,7 +3,7 @@
 from wtforms import Form, StringField, IntegerField, SelectField, validators
 from wtforms.fields.html5 import DateField
 from datetime import datetime
-from config import programs
+from .config import programs
 
 
 class DistributorForm(Form):
