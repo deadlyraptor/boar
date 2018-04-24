@@ -12,7 +12,7 @@ class Distributors(Table):
     city = Col('City')
     state = Col('State')
     zip = Col('Zip')
-    edit = LinkCol('Edit', 'edit', url_kwargs=dict(id='id'))
+    edit = LinkCol('Edit', 'edit_distributor', url_kwargs=dict(id='id'))
     delete = LinkCol('Delete', 'delete_distributor', url_kwargs=dict(id='id'))
 
 
@@ -28,7 +28,7 @@ class Bookings(Table):
     view_results = LinkCol('View Results', 'view_results',
                            url_kwargs=dict(id='id'))
     distributor = Col('Distributor')
-    update = LinkCol('Update', 'update', url_kwargs=dict(id='id'))
+    update = LinkCol('Edit', 'edit_booking', url_kwargs=dict(id='id'))
     enter_payment = LinkCol('Enter Payment', 'enter_payment',
                             url_kwargs=dict(id='id'))
     view_payments = LinkCol('View Payments', 'view_payments',

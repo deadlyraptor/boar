@@ -60,8 +60,8 @@ def list_distributors():
         return render_template('/distributor/distributors.html', table=table)
 
 
-@app.route('/edit/<int:id>', methods=['GET', 'POST'])
-def edit(id):
+@app.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])
+def edit_distributor(id):
     qry = db_session.query(Distributor).filter(Distributor.id == id)
     distributor = qry.first()
 
@@ -76,7 +76,7 @@ def edit(id):
         return 'Error loading #{id}'.format(id=id)
 
 
-@app.route('/delete/<int:id>', methods=['GET', 'POST'])
+@app.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
 def delete_distributor(id):
     """
     Delete the item in the database that matches the specified ID in the URL

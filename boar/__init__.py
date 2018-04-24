@@ -10,6 +10,7 @@ db = SQLAlchemy(app)
 
 from . import views
 from . import distributor
+from . import booking
 
 if __name__ == '__main__':
     app.run()

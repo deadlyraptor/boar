@@ -3,118 +3,14 @@
 from boar import app
 from .db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
-from .models import Distributor, Booking, Payment
-from .forms import DistributorForm, BookingForm, PaymentForm
+from .models import Booking, Payment
+from .forms import PaymentForm
 from .tables import Distributors, Bookings, Payments, Results
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-# booking routes
-
-
-@app.route('/new_booking', methods=['GET', 'POST'])
-def new_booking():
-    """
-    Add a new booking
-    """
-    form = BookingForm(request.form)
-
-    if request.method == 'POST' and form.validate():
-        # save the booking
-        booking = Booking()
-        save_booking(booking, form, new=True)
-        flash('Booking added successfully!')
-        return redirect('/')
-
-    return render_template('new_booking.html', form=form)
-
-
-def save_booking(booking, form, new=False):
-    """
-    Save changes to the database
-    """
-    # Get data from form and assign it to the correct attributes
-    # of the SQLAlchemy table object
-
-    distributor = db_session.query(Distributor).filter_by(
-                                         company=form.distributor.data).first()
-
-    booking.distributor = distributor
-    booking.film = form.film.data
-    booking.program = form.program.data
-    booking.guarantee = form.guarantee.data
-    booking.percentage = form.percentage.data
-    booking.start_date = form.start_date.data
-    booking.end_date = form.end_date.data
-    booking.gross = form.gross.data
-
-    if new:
-        # Add the new booking to the database
-        db_session.add(booking)
-
-    # commit the data to the database
-    db_session.commit()
-
-    return render_template('new_booking.html', form=form)
-
-
-@app.route('/open_bookings')
-def open_bookings():
-    bookings = []
-    qry = db_session.query(Booking).order_by(
-                            Booking.start_date).filter(Booking.settled == 0)
-    bookings = qry.all()
-
-    if not bookings:
-        flash('No open bookings found!')
-        return redirect('/')
-    else:
-        # display open bookings
-        table = Bookings(bookings)
-        table.border = True
-        return render_template('open_bookings.html', table=table)
-
-
-@app.route('/booking/<int:id>', methods=['GET', 'POST'])
-def update(id):
-    qry = db_session.query(Booking).filter(Booking.id == id)
-    booking = qry.first()
-
-    if booking:
-        form = BookingForm(formdata=request.form, obj=booking)
-        if request.method == 'POST' and form.validate():
-            # save data
-            save_booking(booking, form)
-            flash('Booking updated successfully!')
-            return redirect('/')
-        return render_template('update_booking.html', form=form)
-    else:
-        return 'Error loading #{id}'.format(id=id)
-
-
-@app.route('/delete_booking/<int:id>', methods=['GET', 'POST'])
-def delete_booking(id):
-    """
-    Delete the item in the database that matches the specified ID in the URL
-    """
-    qry = db_session.query(Booking).filter(Booking.id == id)
-    booking = qry.first()
-
-    if booking:
-        form = BookingForm(formdata=request.form, obj=booking)
-        if request.method == 'POST' and form.validate():
-            # delete the item from the database
-            db_session.delete(booking)
-            db_session.commit()
-
-            flash('Booking deleted successfully!')
-            return redirect('/')
-        return render_template('delete_booking.html', form=form)
-    else:
-        return 'Error deleting #{id}'.format(id=id)
 
 # payment routes
 
