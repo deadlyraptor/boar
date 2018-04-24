@@ -9,6 +9,7 @@ app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
 
 from . import views
+from . import distributor
 
 if __name__ == '__main__':
     app.run()
