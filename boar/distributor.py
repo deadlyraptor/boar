@@ -8,7 +8,7 @@ from .forms import DistributorForm
 from .tables import Distributors
 
 
-@app.route('/new', methods=['GET', 'POST'])
+@app.route('/distributor/new', methods=['GET', 'POST'])
 def new_distributor():
     """
     Add a new distributor

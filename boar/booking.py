@@ -8,7 +8,7 @@ from .forms import BookingForm
 from .tables import Bookings
 
 
-@app.route('/new', methods=['GET', 'POST'])
+@app.route('/booking/new', methods=['GET', 'POST'])
 def new_booking():
     """
     Add a new booking
@@ -21,6 +21,7 @@ def new_booking():
         save_booking(booking, form, new=True)
         flash('Booking added successfully!')
         return redirect('/')
+
     return render_template('/booking/new.html', form=form)
 
 
