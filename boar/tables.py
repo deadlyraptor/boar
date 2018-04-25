@@ -29,7 +29,7 @@ class Bookings(Table):
                            url_kwargs=dict(id='id'))
     distributor = Col('Distributor')
     update = LinkCol('Edit', 'edit_booking', url_kwargs=dict(id='id'))
-    enter_payment = LinkCol('Enter Payment', 'enter_payment',
+    enter_payment = LinkCol('Enter Payment', 'new_payment',
                             url_kwargs=dict(id='id'))
     view_payments = LinkCol('View Payments', 'view_payments',
                             url_kwargs=dict(id='id'))
