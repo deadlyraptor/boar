@@ -2,10 +2,10 @@
 
 from boar import app
 from flask import Flask, flash, render_template, request, redirect
-from .db_setup import db_session
-from .models import Booking, Payment
-from .forms import PaymentForm
-from .tables import Bookings, Payments
+from ..db_setup import db_session
+from ..models import Booking, Payment
+from ..forms import PaymentForm
+from ..tables import Bookings, Payments
 
 
 @app.route('/payment/new/<int:id>', methods=['GET', 'POST'])

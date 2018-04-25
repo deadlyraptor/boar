@@ -1,10 +1,10 @@
 # views.py
 
 from boar import app
-from .db_setup import db_session
+from ..db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
-from .models import Booking
-from .tables import Distributors, Results
+from ..models import Booking
+from ..tables import Distributors, Results
 
 
 @app.route('/')

@@ -2,10 +2,10 @@
 
 from boar import app
 from flask import Flask, flash, render_template, request, redirect
-from .db_setup import db_session
-from .models import Distributor
-from .forms import DistributorForm
-from .tables import Distributors
+from ..db_setup import db_session
+from ..models import Distributor
+from ..forms import DistributorForm
+from ..tables import Distributors
 
 
 @app.route('/distributor/new', methods=['GET', 'POST'])
