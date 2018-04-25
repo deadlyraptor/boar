@@ -3,69 +3,13 @@
 from boar import app
 from .db_setup import db_session
 from flask import Flask, flash, render_template, request, redirect
-from .models import Booking, Payment
-from .forms import PaymentForm
-from .tables import Distributors, Bookings, Payments, Results
+from .models import Booking
+from .tables import Distributors, Results
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-# payment routes
-
-
-@app.route('/enter_payment/<int:id>', methods=['GET', 'POST'])
-def enter_payment(id):
-    """
-    Enter a payment.
-    """
-    form = PaymentForm(request.form)
-
-    if request.method == 'POST' and form.validate():
-        # save the payment
-        payment = Payment()
-        save_payment(payment, form, id, new=True)
-        flash('Payment entered successfully!')
-        return redirect('/open_bookings')
-
-    return render_template('enter_payment.html', form=form)
-
-
-def save_payment(payment, form, id, new=False):
-    """
-    Save changes to the database
-    """
-    # booking = db_session.query(Booking).filter_by(
-    #                                film=form.booking.data).first()
-    booking = db_session.query(Booking).filter(Booking.id == id).first()
-
-    payment.booking = booking
-    payment.date = form.date.data
-    payment.check_number = form.check_number.data
-    payment.amount = form.amount.data
-
-    if new:
-        db_session.add(payment)
-    db_session.commit()
-
-
-@app.route('/payments/<int:id>')
-def view_payments(id):
-    """
-    View payments.
-    """
-    payments = []
-    qry = db_session.query(Payment).filter(Payment.booking_id == id)
-    payments = qry.all()
-
-    if not payments:
-        flash('No payments found!')
-        return redirect('/open_bookings')
-    else:
-        table = Payments(payments)
-        table.border = True
-        return render_template('payments.html', table=table)
 
 
 @app.route('/results/<int:id>')
