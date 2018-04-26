@@ -2,8 +2,11 @@
 
 from wtforms import Form, StringField, IntegerField, SelectField, validators
 from wtforms.fields.html5 import DateField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
 from .config import programs
+from .db_setup import db_session
+from .models import Distributor
 
 
 class DistributorForm(Form):
@@ -36,19 +39,25 @@ class DistributorForm(Form):
     zip = StringField('Zip')
 
 
+def query_distributor():
+    return db_session.query(Distributor).order_by(Distributor.company)
+
+
 class BookingForm(Form):
     distributor = StringField('Distributor')
+    distributor = QuerySelectField(query_factory=query_distributor,
+                                   allow_blank=False, get_label='company')
     film = StringField('Film')
     program = SelectField('Program', choices=programs)
     guarantee = IntegerField('Guarantee')
     percentage = IntegerField('Percentage')
     start_date = DateField('Start Date', default=datetime.utcnow)
     end_date = DateField('End Date', default=datetime.utcnow)
-    gross = IntegerField('Gross')
+    gross = IntegerField('Gross', default=0)
 
 
 class PaymentForm(Form):
     booking = StringField('Booking')
-    date = DateField('Date', default=datetime.today)
+    date = DateField('Date', default=datetime.utcnow)
     check_number = StringField('Check Number')
     amount = IntegerField('Amount')
