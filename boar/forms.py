@@ -1,5 +1,6 @@
 # forms.py
 
+from flask_wtf import FlaskForm
 from wtforms import Form, StringField, IntegerField, SelectField, validators
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
@@ -56,7 +57,7 @@ class BookingForm(Form):
     gross = IntegerField('Gross', default=0)
 
 
-class PaymentForm(Form):
+class PaymentForm(FlaskForm):
     booking = StringField('Booking')
     date = DateField('Date', default=datetime.utcnow)
     check_number = StringField('Check Number')

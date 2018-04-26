@@ -15,8 +15,8 @@ def new_payment(id):
     """
     form = PaymentForm(request.form)
 
-    if request.method == 'POST' and form.validate():
-        payments = Payment()
+    if form.validate_on_submit():
+        payment = Payment()
         save_payment(payment, form, id, new=True)
         flash('Payment entered successfully!')
         return redirect('/open_bookings')
@@ -44,7 +44,7 @@ def view_payments(id):
     View payments associated with booking
     """
     payments = []
-    qry = db_session.query(Payment).filter(Payment.id == id)
+    qry = db_session.query(Payment).filter(Payment.booking_id == id)
     payments = qry.all()
 
     if not payments:
