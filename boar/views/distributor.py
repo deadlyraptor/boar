@@ -15,7 +15,7 @@ def new_distributor():
     """
     form = DistributorForm(request.form)
 
-    if request.method == 'POST' and form.validate():
+    if form.validate_on_submit():
         distributor = Distributor()
         save_distributor(distributor, form, new=True)
         flash('Distributor added successfully!')
@@ -67,7 +67,7 @@ def edit_distributor(id):
 
     if distributor:
         form = DistributorForm(formdata=request.form, obj=distributor)
-        if request.method == 'POST' and form.validate():
+        if form.validate_on_submit():
             save_distributor(distributor, form)
             flash('Distributor updated successfully!')
             return redirect('/')
@@ -86,7 +86,7 @@ def delete_distributor(id):
 
     if distributor:
         form = DistributorForm(formdata=request.form, obj=distributor)
-        if request.method == 'POST' and form.validate():
+        if form.validate_on_submit():
             db_session.delete(distributor)
             db_session.commit()
 

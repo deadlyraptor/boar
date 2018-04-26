@@ -15,7 +15,7 @@ def new_booking():
     """
     form = BookingForm(request.form)
 
-    if request.method == 'POST' and form.validate():
+    if form.validate_on_submit():
         # save the booking
         booking = Booking()
         save_booking(booking, form, new=True)
@@ -70,7 +70,7 @@ def edit_booking(id):
 
     if booking:
         form = BookingForm(formdata=request.form, obj=booking)
-        if request.method == 'POST' and form.validate():
+        if form.validate_on_submit():
             save_booking(booking, form)
             flash('Booking updated successfully!')
             return redirect('/')
@@ -86,7 +86,7 @@ def delete_booking(id):
 
     if booking:
         form = BookingForm(formdata=request.form, obj=booking)
-        if request.method == 'POST' and form.validate():
+        if form.validate_on_submit():
             db_session.delete(booking)
             db_session.commit()
 

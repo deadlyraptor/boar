@@ -10,7 +10,7 @@ from .db_setup import db_session
 from .models import Distributor
 
 
-class DistributorForm(Form):
+class DistributorForm(FlaskForm):
     states = [('AK', 'Alaska'), ('AL', 'Alabama'), ('AR', 'Arkansas'),
               ('AZ', 'Arizona'), ('CA', 'California'), ('CO', 'Colorado'),
               ('CT', 'Connecticut'), ('DC', 'District of Columbia'),
@@ -44,14 +44,14 @@ def query_distributor():
     return db_session.query(Distributor).order_by(Distributor.company)
 
 
-class BookingForm(Form):
+class BookingForm(FlaskForm):
     distributor = StringField('Distributor')
     distributor = QuerySelectField(query_factory=query_distributor,
                                    allow_blank=False, get_label='company')
     film = StringField('Film')
     program = SelectField('Program', choices=programs)
-    guarantee = IntegerField('Guarantee')
-    percentage = IntegerField('Percentage')
+    guarantee = IntegerField('Guarantee', default=0)
+    percentage = IntegerField('Percentage', default=0)
     start_date = DateField('Start Date', default=datetime.utcnow)
     end_date = DateField('End Date', default=datetime.utcnow)
     gross = IntegerField('Gross', default=0)

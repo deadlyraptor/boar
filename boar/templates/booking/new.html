@@ -7,6 +7,7 @@
 {% from "_formhelpers.html" import render_field  %}
 <form method=post>
   <dl>
+    {{ form.csrf_token }}
     {{ render_field(form.distributor) }}
     {{ render_field(form.film) }}
     {{ render_field(form.program) }}
