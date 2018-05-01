@@ -1,7 +1,8 @@
 # forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import Form, StringField, IntegerField, SelectField, validators
+from wtforms import Form, StringField, IntegerField, SelectField
+from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
@@ -31,13 +32,13 @@ class DistributorForm(FlaskForm):
               ('VA', 'Virginia'), ('VT', 'Vermont'), ('WA', 'Washington'),
               ('WI', 'Wisconsin'), ('WV', 'West Virginia'), ('WY', 'Wyoming')]
 
-    company = StringField('Company')
-    payee = StringField('Payee')
-    address1 = StringField('Address 1')
-    address2 = StringField('Address 2')
-    city = StringField('City')
+    company = StringField('Company', validators=[InputRequired()])
+    payee = StringField('Payee', validators=[InputRequired()])
+    address1 = StringField('Address 1', validators=[InputRequired()])
+    address2 = StringField('Address 2', validators=[InputRequired()])
+    city = StringField('City', validators=[InputRequired()])
     state = SelectField('State', choices=states)
-    zip = StringField('Zip')
+    zip = StringField('Zip', validators=[InputRequired()])
 
 
 def query_distributor():
@@ -45,10 +46,9 @@ def query_distributor():
 
 
 class BookingForm(FlaskForm):
-    distributor = StringField('Distributor')
     distributor = QuerySelectField(query_factory=query_distributor,
                                    allow_blank=False, get_label='company')
-    film = StringField('Film')
+    film = StringField('Film', validators=[InputRequired()])
     program = SelectField('Program', choices=programs)
     guarantee = IntegerField('Guarantee', default=0)
     percentage = IntegerField('Percentage', default=0)
@@ -58,7 +58,7 @@ class BookingForm(FlaskForm):
 
 
 class PaymentForm(FlaskForm):
-    booking = StringField('Booking')
+    booking = StringField('Booking', validators=[InputRequired])
     date = DateField('Date', default=datetime.utcnow)
-    check_number = StringField('Check Number')
-    amount = IntegerField('Amount')
+    check_number = StringField('Check Number', validators=[InputRequired()])
+    amount = IntegerField('Amount', validators=[InputRequired()])

@@ -20,6 +20,9 @@ class Distributor(db.Model):
     def __repr__(self):
         return '<Distributor {}>'.format(self.company)
 
+    def __str__(self):
+        return '{}'.format(self.company)
+
 
 class Booking(db.Model):
     __tablename__ = 'bookings'

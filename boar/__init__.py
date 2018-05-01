@@ -12,6 +12,3 @@ from .views import results
 from .views import distributor
 from .views import booking
 from .views import payment
-
-if __name__ == '__main__':
-    app.run()
