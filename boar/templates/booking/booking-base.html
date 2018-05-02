@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{% block heading %}{% endblock %}</h2>
+
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <dl>
+    {{ form.csrf_token }}
+    {{ render_field(form.distributor) }}
+    {{ render_field(form.film) }}
+    {{ render_field(form.program) }}
+    {{ render_field(form.guarantee) }}
+    {{ render_field(form.percentage) }}
+    {{ render_field(form.start_date) }}
+    {{ render_field(form.end_date) }}
+    {{ render_field(form.gross) }}
+  </dl>
+  <p>{% block input %}{% endblock %}</p>
+</form>
+
+<p><a href="{{ url_for('.open_bookings') }}">Go back</a></p>
+
+<p><a href="{{ url_for('.index') }}">Cancel</a></p>
+
+{% endblock %}
