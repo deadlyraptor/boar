@@ -1,27 +1,6 @@
-{% extends 'base.html' %}
-{% block title %}Delete Booking - Boar{% endblock %}
-{% block content %}
+{% extends 'booking/booking-base.html' %}
+{% block title %}Delete Booking{% endblock %}
 
-<h2>Delete Booking</h2>
+{% block heading %}Delete Booking{% endblock %}
 
-{% from "_formhelpers.html" import render_field  %}
-<form method=post>
-  <dl>
-    {{ form.csrf_token }}
-    {{ render_field(form.distributor) }}
-    {{ render_field(form.film) }}
-    {{ render_field(form.program) }}
-    {{ render_field(form.guarantee) }}
-    {{ render_field(form.percentage) }}
-    {{ render_field(form.start_date) }}
-    {{ render_field(form.end_date) }}
-    {{ render_field(form.gross) }}
-  </dl>
-  <p><input type=submit value=Delete /></p>
-</form>
-
-<p><a href="{{ url_for('.open_bookings') }}">Go back</a></p>
-
-<p><a href="{{ url_for('.index') }}">Cancel</a></p>
-
-{% endblock %}
+{% block input %}<input type=submit value=Delete />{% endblock %}
