@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{% block heading %}{% endblock %}</h2>
+
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <dl>
+    {{ form.csrf_token }}
+    {{ render_field(form.company) }}
+    {{ render_field(form.payee) }}
+    {{ render_field(form.address1) }}
+    {{ render_field(form.address2) }}
+    {{ render_field(form.city) }}
+    {{ render_field(form.state) }}
+    {{ render_field(form.zip) }}
+  </dl>
+  <p>{% block input %}{% endblock %}</p>
+</form>
+
+<p><a href="{{ url_for('.list_distributors') }}">Go back</a></p>
+
+<p><a href="{{ url_for('.index') }}">Cancel</a></p>
+
+{% endblock %}
