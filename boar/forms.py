@@ -35,7 +35,7 @@ class DistributorForm(FlaskForm):
     company = StringField('Company', validators=[InputRequired()])
     payee = StringField('Payee', validators=[InputRequired()])
     address1 = StringField('Address 1', validators=[InputRequired()])
-    address2 = StringField('Address 2', validators=[InputRequired()])
+    address2 = StringField('Address 2')
     city = StringField('City', validators=[InputRequired()])
     state = SelectField('State', choices=states)
     zip = StringField('Zip', validators=[InputRequired()])
