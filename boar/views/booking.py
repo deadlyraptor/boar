@@ -1,7 +1,7 @@
 # booking.py
 
 from boar import app
-from flask import Flask, flash, render_template, request, redirect
+from flask import Flask, flash, render_template, request, redirect, url_for
 from ..db_setup import db_session
 from ..models import Booking, Distributor
 from ..forms import BookingForm
@@ -13,38 +13,22 @@ def new_booking():
     """
     Add a new booking
     """
-    form = BookingForm(request.form)
+    form = BookingForm()
 
     if form.validate_on_submit():
-        # save the booking
-        booking = Booking()
-        save_booking(booking, form, new=True)
-        flash('Booking added successfully!')
-        return redirect('/')
-
-    return render_template('/booking/new.html', form=form)
-
-
-def save_booking(booking, form, new=False):
-    """
-    Save changes to the database
-    """
-    # Get data from form and assign it to the correct attributes of the
-    # SQLAlchemy table object
-
-    booking.distributor = form.distributor.data
-    booking.film = form.film.data
-    booking.program = form.program.data
-    booking.guarantee = form.guarantee.data
-    booking.percentage = form.percentage.data
-    booking.start_date = form.start_date.data
-    booking.end_date = form.end_date.data
-    booking.gross = form.gross.data
-
-    if new:
+        booking = Booking(distributor=form.distributor.data,
+                          film=form.film.data,
+                          program=form.program.data,
+                          guarantee=form.guarantee.data,
+                          percentage=form.percentage.data,
+                          start_date=form.start_date.data,
+                          end_date=form.end_date.data,
+                          gross=form.gross.data)
         db_session.add(booking)
-
-    db_session.commit()
+        db_session.commit()
+        flash('Booking added successfully!')
+        return redirect(url_for('index'))
+    return render_template('/booking/new.html', form=form)
 
 
 @app.route('/open_bookings')

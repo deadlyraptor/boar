@@ -1,7 +1,7 @@
 # distributor.py
 
 from boar import app
-from flask import Flask, flash, render_template, request, redirect
+from flask import Flask, flash, render_template, request, redirect, url_for
 from ..db_setup import db_session
 from ..models import Distributor
 from ..forms import DistributorForm
@@ -13,36 +13,20 @@ def new_distributor():
     """
     Add a new distributor
     """
-    form = DistributorForm(request.form)
+    form = DistributorForm()
 
     if form.validate_on_submit():
-        distributor = Distributor()
-        save_distributor(distributor, form, new=True)
-        flash('Distributor added successfully!')
-        return redirect('/')
-
-    return render_template('/distributor/new.html', form=form)
-
-
-def save_distributor(distributor, form, new=False):
-    """
-    Save the changes to the database
-    """
-    # get the data from form and assign it to the correct attributes of the
-    # SQLAlchemy table object
-
-    distributor.company = form.company.data
-    distributor.payee = form.payee.data
-    distributor.address1 = form.address1.data
-    distributor.address2 = form.address2.data
-    distributor.city = form.city.data
-    distributor.state = form.state.data
-    distributor.zip = form.zip.data
-
-    if new:
+        distributor = Distributor(company=form.company.data,
+                                  payee=form.payee.data,
+                                  address1=form.address1.data,
+                                  address2=form.address2.data,
+                                  city=form.city.data, state=form.state.data,
+                                  zip=form.zip.data)
         db_session.add(distributor)
-
-    db_session.commit()
+        db_session.commit()
+        flash('Distributor added successfully!')
+        return redirect(url_for('index'))
+    return render_template('/distributor/new.html', form=form)
 
 
 @app.route('/distributors')
