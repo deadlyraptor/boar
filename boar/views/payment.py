@@ -38,7 +38,7 @@ def view_payments(id):
 
     if not payments:
         flash('No payments found!')
-        return redirect('/open_bookings')
+        return redirect(urlfor('open_bookings'))
     else:
         table = Payments(payments)
         table.border = True

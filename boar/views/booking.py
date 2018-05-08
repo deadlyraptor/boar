@@ -57,7 +57,7 @@ def edit_booking(id):
         if form.validate_on_submit():
             save_booking(booking, form)
             flash('Booking updated successfully!')
-            return redirect('/')
+            return redirect(url_for('index'))
         return render_template('/booking/edit.html', form=form)
     else:
         return 'Error loading #{id}'.format(id=id)
@@ -75,7 +75,7 @@ def delete_booking(id):
             db_session.commit()
 
             flash('Booking deleted successfully!')
-            return redirect('/')
+            return redirect(url_for('index'))
         return render_template('/booking/delete.html', form=form)
     else:
         return 'Error deleting #{id}'.format(id=id)

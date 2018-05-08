@@ -37,7 +37,7 @@ def list_distributors():
 
     if not distributors:
         flash('No distributors found!')
-        return redirect('/')
+        return redirect(url_for('index'))
     else:
         table = Distributors(distributors)
         table.border = True
@@ -54,7 +54,7 @@ def edit_distributor(id):
         if form.validate_on_submit():
             save_distributor(distributor, form)
             flash('Distributor updated successfully!')
-            return redirect('/')
+            return redirect(url_for('index'))
         return render_template('/distributor/edit.html', form=form)
     else:
         return 'Error loading #{id}'.format(id=id)
@@ -75,7 +75,7 @@ def delete_distributor(id):
             db_session.commit()
 
             flash('Distributor deleted successfully!')
-            return redirect('/')
+            return redirect(url_for('index'))
         return render_template('/distributor/delete.html', form=form)
     else:
         return 'Error deleting #{id}'.format(id=id)

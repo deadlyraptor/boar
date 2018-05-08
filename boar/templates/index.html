@@ -13,14 +13,4 @@
 
 <p><a href="{{ url_for('.list_distributors') }}">List Distributors</a></p>
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-
 {% endblock %}
