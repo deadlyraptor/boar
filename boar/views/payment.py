@@ -1,7 +1,7 @@
 # payment.py
 
 from boar import app
-from flask import Flask, flash, render_template, request, redirect
+from flask import Flask, flash, render_template, request, redirect, url_for
 from ..db_setup import db_session
 from ..models import Booking, Payment
 from ..forms import PaymentForm
@@ -13,29 +13,18 @@ def new_payment(id):
     """
     Add a payment
     """
-    form = PaymentForm(request.form)
-
-    if form.validate_on_submit():
-        payment = Payment()
-        save_payment(payment, form, id, new=True)
-        flash('Payment entered successfully!')
-        return redirect('/open_bookings')
-
-    return render_template('/payment/new.html', form=form)
-
-
-def save_payment(payment, form, id, new=False):
+    form = PaymentForm()
     booking = db_session.query(Booking).filter(Booking.id == id).first()
 
-    payment.booking = booking
-    payment.date = form.date.data
-    payment.check_number = form.check_number.data
-    payment.amount = form.amount.data
-
-    if new:
+    if form.validate_on_submit():
+        payment = Payment(booking=booking, date=form.date.data,
+                          check_number=form.check_number.data,
+                          amount=form.amount.data)
         db_session.add(payment)
-
-    db_session.commit()
+        db_session.commit()
+        flash('Payment entered successfully!')
+        return redirect(url_for('open_bookings'))
+    return render_template('/payment/new.html', form=form)
 
 
 @app.route('/payments/<int:id>')
@@ -49,7 +38,7 @@ def view_payments(id):
 
     if not payments:
         flash('No payments found!')
-        return redirect('/open_bookings')
+        return redirect(urlfor('open_bookings'))
     else:
         table = Payments(payments)
         table.border = True

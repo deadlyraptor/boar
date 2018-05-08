@@ -2,13 +2,11 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from .config import Config
 
 app = Flask(__name__)
-app.config.from_pyfile('config.py')
+app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 
-from .views import results
-from .views import distributor
-from .views import booking
-from .views import payment
+from .views import results, distributor, booking, payment

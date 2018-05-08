@@ -58,7 +58,7 @@ def view_results(id):
 
     if not results:
         flash('No results found!')
-        return redirect('/open_bookings')
+        return redirect(url_for('open_bookings'))
     else:
         table = Results(finances)
         table.border = True

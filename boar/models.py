@@ -44,6 +44,9 @@ class Booking(db.Model):
     def __repr__(self):
         return '<Booking {}>'.format(self.film)
 
+    def __str__(self):
+        return '{}'.format(self.film)
+
 
 class Payment(db.Model):
     __tablename__ = 'payments'
