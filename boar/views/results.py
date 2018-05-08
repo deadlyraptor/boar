@@ -7,11 +7,6 @@ from ..models import Booking
 from ..tables import Distributors, Results
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
 @app.route('/results/<int:id>')
 def view_results(id):
     """

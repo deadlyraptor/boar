@@ -3,6 +3,21 @@
 from boar import db
 
 
+class Organization(db.Model):
+    __tablename = 'organizations'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    address1 = db.Column(db.String)
+    address2 = db.Column(db.String)
+    city = db.Column(db.String)
+    state = db.Column(db.String)
+    zip = db.Column(db.String)
+
+    def __repr__(self):
+        return '<Organization {}>'.format(self.name)
+
+
 class Distributor(db.Model):
     __tablename__ = 'distributors'
 

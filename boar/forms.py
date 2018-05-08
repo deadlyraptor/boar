@@ -6,7 +6,7 @@ from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
-from .config import programs
+from config import programs
 from .db_setup import db_session
 from .models import Distributor
 
