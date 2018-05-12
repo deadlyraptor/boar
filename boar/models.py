@@ -4,7 +4,7 @@ from boar import db
 
 
 class Organization(db.Model):
-    __tablename = 'organizations'
+    __tablename__ = 'organizations'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)

@@ -1,8 +1,7 @@
 # booking.py
 
-from boar import app
+from boar import app, db
 from flask import Flask, flash, render_template, request, redirect, url_for
-from ..db_setup import db_session
 from ..models import Booking, Distributor
 from ..forms import BookingForm
 from ..tables import Bookings
@@ -14,7 +13,6 @@ def new_booking():
     Add a new booking
     """
     form = BookingForm()
-
     if form.validate_on_submit():
         booking = Booking(distributor=form.distributor.data,
                           film=form.film.data,
@@ -24,8 +22,8 @@ def new_booking():
                           start_date=form.start_date.data,
                           end_date=form.end_date.data,
                           gross=form.gross.data)
-        db_session.add(booking)
-        db_session.commit()
+        db.session.add(booking)
+        db.session.commit()
         flash('Booking added successfully!')
         return redirect(url_for('index'))
     return render_template('/booking/new.html', form=form)
@@ -33,11 +31,8 @@ def new_booking():
 
 @app.route('/open_bookings')
 def open_bookings():
-    bookings = []
-    qry = db_session.query(Booking).order_by(
-                            Booking.start_date).filter(Booking.settled == 0)
-    bookings = qry.all()
-
+    bookings = Booking.query.order_by(
+        Booking.start_date).filter(Booking.settled == 0)
     if not bookings:
         flash('No open bookings found!')
         return redirect('/')
@@ -49,33 +44,31 @@ def open_bookings():
 
 @app.route('/booking/edit/<int:id>', methods=['GET', 'POST'])
 def edit_booking(id):
-    qry = db_session.query(Booking).filter(Booking.id == id)
-    booking = qry.first()
-
-    if booking:
-        form = BookingForm(formdata=request.form, obj=booking)
-        if form.validate_on_submit():
-            save_booking(booking, form)
-            flash('Booking updated successfully!')
-            return redirect(url_for('index'))
-        return render_template('/booking/edit.html', form=form)
-    else:
-        return 'Error loading #{id}'.format(id=id)
+    booking = Booking.query.filter(Booking.id == id).first()
+    form = BookingForm(obj=booking)
+    if form.validate_on_submit():
+        booking.distributor = form.distributor.data
+        booking.film = form.film.data
+        booking.program = form.program.data
+        booking.guarantee = form.guarantee.data
+        booking.percentage = form.percentage.data
+        booking.start_date = form.start_date.data
+        booking.end_date = form.end_date.data
+        booking.gross = form.gross.data
+        db.session.commit()
+        flash('Booking updated successfully!')
+        return redirect(url_for('index'))
+    return render_template('/booking/edit.html', form=form)
 
 
 @app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
 def delete_booking(id):
-    qry = db_session.query(Booking).filter(Booking.id == id)
-    booking = qry.first()
-
+    booking = Booking.query.filter(Booking.id == id).first()
     if booking:
-        form = BookingForm(formdata=request.form, obj=booking)
+        form = BookingForm(obj=booking)
         if form.validate_on_submit():
-            db_session.delete(booking)
-            db_session.commit()
-
+            db.session.delete(booking)
+            db.session.commit()
             flash('Booking deleted successfully!')
             return redirect(url_for('index'))
         return render_template('/booking/delete.html', form=form)
-    else:
-        return 'Error deleting #{id}'.format(id=id)

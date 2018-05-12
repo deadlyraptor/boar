@@ -1,8 +1,7 @@
 # distributor.py
 
-from boar import app
+from boar import app, db
 from flask import Flask, flash, render_template, request, redirect, url_for
-from ..db_setup import db_session
 from ..models import Distributor
 from ..forms import DistributorForm
 from ..tables import Distributors
@@ -14,16 +13,16 @@ def new_distributor():
     Add a new distributor
     """
     form = DistributorForm()
-
     if form.validate_on_submit():
         distributor = Distributor(company=form.company.data,
                                   payee=form.payee.data,
                                   address1=form.address1.data,
                                   address2=form.address2.data,
-                                  city=form.city.data, state=form.state.data,
+                                  city=form.city.data,
+                                  state=form.state.data,
                                   zip=form.zip.data)
-        db_session.add(distributor)
-        db_session.commit()
+        db.session.add(distributor)
+        db.session.commit()
         flash('Distributor added successfully!')
         return redirect(url_for('index'))
     return render_template('/distributor/new.html', form=form)
@@ -31,10 +30,7 @@ def new_distributor():
 
 @app.route('/distributors')
 def list_distributors():
-    distributors = []
-    qry = db_session.query(Distributor).order_by(Distributor.company)
-    distributors = qry.all()
-
+    distributors = Distributor.query.order_by(Distributor.company).all()
     if not distributors:
         flash('No distributors found!')
         return redirect(url_for('index'))
@@ -46,18 +42,21 @@ def list_distributors():
 
 @app.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])
 def edit_distributor(id):
-    qry = db_session.query(Distributor).filter(Distributor.id == id)
-    distributor = qry.first()
-
-    if distributor:
-        form = DistributorForm(formdata=request.form, obj=distributor)
-        if form.validate_on_submit():
-            save_distributor(distributor, form)
-            flash('Distributor updated successfully!')
-            return redirect(url_for('index'))
-        return render_template('/distributor/edit.html', form=form)
-    else:
-        return 'Error loading #{id}'.format(id=id)
+    distributor = Distributor.query.filter(Distributor.id == id).first()
+    form = DistributorForm(obj=distributor)
+    if form.validate_on_submit():
+        distributor.company = form.company.data
+        distributor.payee = form.payee.data
+        distributor.address1 = form.address1.data
+        distributor.address2 = form.address2.data
+        distributor.city = form.city.data
+        distributor.state = form.state.data
+        distributor.zip = form.zip.data
+        db.session.commit()
+        # save_distributor(distributor, form)
+        flash('Distributor updated successfully!')
+        return redirect(url_for('index'))
+    return render_template('/distributor/edit.html', form=form)
 
 
 @app.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
@@ -65,17 +64,12 @@ def delete_distributor(id):
     """
     Delete the item in the database that matches the specified ID in the URL
     """
-    qry = db_session.query(Distributor).filter(Distributor.id == id)
-    distributor = qry.first()
-
+    distributor = Distributor.query.filter(Distributor.id == id).first()
     if distributor:
-        form = DistributorForm(formdata=request.form, obj=distributor)
+        form = DistributorForm(obj=distributor)
         if form.validate_on_submit():
-            db_session.delete(distributor)
-            db_session.commit()
-
+            db.session.delete(distributor)
+            db.session.commit()
             flash('Distributor deleted successfully!')
             return redirect(url_for('index'))
         return render_template('/distributor/delete.html', form=form)
-    else:
-        return 'Error deleting #{id}'.format(id=id)
