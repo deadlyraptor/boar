@@ -1,8 +1,7 @@
 # views.py
 
-from boar import app
-from ..db_setup import db_session
-from flask import Flask, flash, render_template, request, redirect
+from boar import app, db
+from flask import Flask, flash, render_template, request, redirect, url_for
 from ..models import Booking
 from ..tables import Distributors, Results
 
@@ -12,9 +11,7 @@ def view_results(id):
     """
     View results.
     """
-    results = []
-    qry = db_session.query(Booking).filter(Booking.id == id)
-    results = qry.all()
+    results = Booking.query.filter(Booking.id == id).all()
 
     film = results[0].film
     percentage = results[0].percentage

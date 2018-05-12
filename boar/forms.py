@@ -6,8 +6,8 @@ from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
+from boar import app, db
 from config import programs
-from .db_setup import db_session
 from .models import Distributor
 
 
@@ -42,7 +42,7 @@ class DistributorForm(FlaskForm):
 
 
 def query_distributor():
-    return db_session.query(Distributor).order_by(Distributor.company)
+    return db.session.query(Distributor).order_by(Distributor.company)
 
 
 class BookingForm(FlaskForm):
