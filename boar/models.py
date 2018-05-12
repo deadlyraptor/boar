@@ -14,8 +14,14 @@ class Organization(db.Model):
     state = db.Column(db.String)
     zip = db.Column(db.String)
 
+    org_bookings = db.relationship('Booking',
+                                   backref='organization', lazy=True)
+
     def __repr__(self):
         return '<Organization {}>'.format(self.name)
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class Distributor(db.Model):
@@ -53,6 +59,7 @@ class Booking(db.Model):
     settled = db.Column(db.Boolean, default=0)
 
     distributor_id = db.Column(db.Integer, db.ForeignKey('distributors.id'))
+    organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
 
     payments = db.relationship('Payment', backref='booking', lazy=True)
 

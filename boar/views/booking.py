@@ -35,7 +35,7 @@ def open_bookings():
         Booking.start_date).filter(Booking.settled == 0)
     if not bookings:
         flash('No open bookings found!')
-        return redirect('/')
+        return redirect(url_for('index'))
     else:
         table = Bookings(bookings)
         table.border = True

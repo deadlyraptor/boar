@@ -5,15 +5,16 @@
     <meta charset="utf-8">
   </head>
   <body>
+    {% block content %}
     {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
+    {% if messages %}
+    <ul>
         {% for message in messages %}
-          <li>{{ message }}</li>
+        <li>{{ message }}</li>
         {% endfor %}
-        </ul>
-      {% endif %}
+    </ul>
+    {% endif %}
     {% endwith %}
-    {%block content %}{% endblock %}
+    {% endblock %}
   </body>
 </html>
