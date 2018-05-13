@@ -51,7 +51,7 @@ class BookingForm(FlaskForm):
     film = StringField('Film', validators=[InputRequired()])
     program = SelectField('Program', choices=programs)
     guarantee = IntegerField('Guarantee', default=0)
-    percentage = IntegerField('Percentage', default=0)
+    percentage = IntegerField('Percentage', default=35)
     start_date = DateField('Start Date', default=datetime.utcnow)
     end_date = DateField('End Date', default=datetime.utcnow)
     gross = IntegerField('Gross', default=0)

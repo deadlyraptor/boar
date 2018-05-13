@@ -5,6 +5,15 @@
     <meta charset="utf-8">
   </head>
   <body>
+    <div>
+      Boar:
+      <a href='{{ url_for('index') }}'>Home</a>
+      <a href='{{ url_for('new_booking') }}'>New Booking</a>
+      <a href='{{ url_for('open_bookings') }}'>Open Bookings</a>
+      <a href='{{ url_for('new_distributor') }}'>New Distributor</a>
+      <a href='{{ url_for('list_distributors') }}'>Distributors</a>
+    </div>
+    <hr />
     {% block content %}
     {% with messages = get_flashed_messages() %}
     {% if messages %}
