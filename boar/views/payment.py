@@ -13,7 +13,7 @@ def new_payment(id):
     Add a payment
     """
     booking = Booking.query.filter(Booking.id == id).first()
-    form = PaymentForm()
+    form = PaymentForm(obj=booking)
     if form.validate_on_submit():
         payment = Payment(booking=booking,
                           date=form.date.data,

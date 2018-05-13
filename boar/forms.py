@@ -58,7 +58,7 @@ class BookingForm(FlaskForm):
 
 
 class PaymentForm(FlaskForm):
-    booking = StringField('Booking', validators=[InputRequired()])
+    film = StringField('Booking', validators=[InputRequired()])
     date = DateField('Date', default=datetime.utcnow)
     check_number = StringField('Check Number', validators=[InputRequired()])
     amount = IntegerField('Amount', validators=[InputRequired()])
