@@ -1,4 +1,4 @@
-# login.py
+# user.py
 
 from flask import render_template, redirect, url_for, request
 from werkzeug.urls import url_parse

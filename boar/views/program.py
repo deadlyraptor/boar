@@ -2,7 +2,7 @@
 
 from boar import app, db
 from flask import flash, render_template, redirect, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..models import Program
 from ..forms import ProgramForm
 from ..tables import Programs
@@ -16,7 +16,8 @@ def new_program():
     """
     form = ProgramForm()
     if form.validate_on_submit():
-        program = Program(name=form.name.data)
+        program = Program(name=form.name.data,
+                          organization_id=current_user.organization_id)
         db.session.add(program)
         db.session.commit()
         flash('Program added successfully!')

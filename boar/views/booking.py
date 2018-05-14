@@ -2,7 +2,7 @@
 
 from boar import app, db
 from flask import flash, render_template, redirect, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..models import Booking, Distributor
 from ..forms import BookingForm
 from ..tables import Bookings
@@ -23,7 +23,8 @@ def new_booking():
                           percentage=form.percentage.data,
                           start_date=form.start_date.data,
                           end_date=form.end_date.data,
-                          gross=form.gross.data)
+                          gross=form.gross.data,
+                          organization_id=current_user.organization_id)
         db.session.add(booking)
         db.session.commit()
         flash('Booking added successfully!')
