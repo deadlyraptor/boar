@@ -16,9 +16,28 @@ class Organization(db.Model):
 
     org_bookings = db.relationship('Booking',
                                    backref='organization', lazy=True)
+    org_programs = db.relationship('Program',
+                                   backref='organization', lazy=True)
 
     def __repr__(self):
         return '<Organization {}>'.format(self.name)
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+
+class Program(db.Model):
+    __tablename__ = 'programs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+    organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+
+    program_bookings = db.relationship('Booking', backref='program', lazy=True)
+
+    def __repr__(self):
+        return '<Program {}>'.format(self.name)
 
     def __str__(self):
         return '{}'.format(self.name)
@@ -50,7 +69,6 @@ class Booking(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     film = db.Column(db.String)
-    program = db.Column(db.String)
     guarantee = db.Column(db.Integer)
     percentage = db.Column(db.Integer)
     start_date = db.Column(db.DateTime)
@@ -60,6 +78,7 @@ class Booking(db.Model):
 
     distributor_id = db.Column(db.Integer, db.ForeignKey('distributors.id'))
     organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+    program_id = db.Column(db.Integer, db.ForeignKey('programs.id'))
 
     payments = db.relationship('Payment', backref='booking', lazy=True)
 

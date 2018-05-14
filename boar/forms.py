@@ -6,9 +6,7 @@ from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
-from boar import app, db
-from config import programs
-from .models import Distributor
+from .models import Distributor, Program
 
 
 class DistributorForm(FlaskForm):
@@ -42,14 +40,19 @@ class DistributorForm(FlaskForm):
 
 
 def query_distributor():
-    return db.session.query(Distributor).order_by(Distributor.company)
+    return Distributor.query.order_by(Distributor.company)
+
+
+def query_program():
+    return Program.query.order_by(Program.name)
 
 
 class BookingForm(FlaskForm):
     distributor = QuerySelectField(query_factory=query_distributor,
                                    allow_blank=False, get_label='company')
     film = StringField('Film', validators=[InputRequired()])
-    program = SelectField('Program', choices=programs)
+    program = QuerySelectField(query_factory=query_program,
+                               allow_blank=False, get_label='name')
     guarantee = IntegerField('Guarantee', default=0)
     percentage = IntegerField('Percentage', default=35)
     start_date = DateField('Start Date', default=datetime.utcnow)
@@ -62,3 +65,7 @@ class PaymentForm(FlaskForm):
     date = DateField('Date', default=datetime.utcnow)
     check_number = StringField('Check Number', validators=[InputRequired()])
     amount = IntegerField('Amount', validators=[InputRequired()])
+
+
+class ProgramForm(FlaskForm):
+    name = StringField('Name', validators=[InputRequired()])

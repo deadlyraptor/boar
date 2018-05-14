@@ -49,3 +49,7 @@ class Results(Table):
     overage = Col('Overage')
     owed = Col('Owed')
     net = Col('Net')
+
+
+class Programs(Table):
+    name = Col('Name')
