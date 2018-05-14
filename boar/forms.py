@@ -1,12 +1,20 @@
 # forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import Form, StringField, IntegerField, SelectField
+from wtforms import (StringField, IntegerField, SelectField, PasswordField,
+                     BooleanField, SubmitField)
 from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
-from .models import Distributor, Program
+from .models import Distributor, Program, User
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired()])
+    password = PasswordField('Password', validators=[InputRequired()])
+    remember_me = BooleanField('Remember Me')
+    submit = SubmitField('Sign In')
 
 
 class DistributorForm(FlaskForm):

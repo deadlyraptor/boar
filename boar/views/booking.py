@@ -1,13 +1,15 @@
 # booking.py
 
 from boar import app, db
-from flask import Flask, flash, render_template, redirect, url_for
+from flask import flash, render_template, redirect, url_for
+from flask_login import login_required
 from ..models import Booking, Distributor
 from ..forms import BookingForm
 from ..tables import Bookings
 
 
 @app.route('/booking/new', methods=['GET', 'POST'])
+@login_required
 def new_booking():
     """
     Add a new booking
@@ -30,6 +32,7 @@ def new_booking():
 
 
 @app.route('/open_bookings')
+@login_required
 def open_bookings():
     bookings = Booking.query.order_by(
         Booking.start_date).filter(Booking.settled == 0)
@@ -43,6 +46,7 @@ def open_bookings():
 
 
 @app.route('/booking/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_booking(id):
     booking = Booking.query.filter(Booking.id == id).first()
     form = BookingForm(obj=booking)
@@ -62,6 +66,7 @@ def edit_booking(id):
 
 
 @app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
 def delete_booking(id):
     booking = Booking.query.filter(Booking.id == id).first()
     if booking:

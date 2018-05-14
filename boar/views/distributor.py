@@ -1,13 +1,15 @@
 # distributor.py
 
 from boar import app, db
-from flask import Flask, flash, render_template, redirect, url_for
+from flask import flash, render_template, redirect, url_for
+from flask_login import login_required
 from ..models import Distributor
 from ..forms import DistributorForm
 from ..tables import Distributors
 
 
 @app.route('/distributor/new', methods=['GET', 'POST'])
+@login_required
 def new_distributor():
     """
     Add a new distributor
@@ -29,6 +31,7 @@ def new_distributor():
 
 
 @app.route('/distributors')
+@login_required
 def list_distributors():
     distributors = Distributor.query.order_by(Distributor.company).all()
     if not distributors:
@@ -41,6 +44,7 @@ def list_distributors():
 
 
 @app.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_distributor(id):
     distributor = Distributor.query.filter(Distributor.id == id).first()
     form = DistributorForm(obj=distributor)
@@ -60,6 +64,7 @@ def edit_distributor(id):
 
 
 @app.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
 def delete_distributor(id):
     """
     Delete the item in the database that matches the specified ID in the URL

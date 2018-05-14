@@ -1,13 +1,15 @@
 # program.py
 
 from boar import app, db
-from flask import Flask, flash, render_template, redirect, url_for
+from flask import flash, render_template, redirect, url_for
+from flask_login import login_required
 from ..models import Program
 from ..forms import ProgramForm
 from ..tables import Programs
 
 
 @app.route('/program/new', methods=['GET', 'POST'])
+@login_required
 def new_program():
     """
     Add a new program
@@ -23,6 +25,7 @@ def new_program():
 
 
 @app.route('/programs', methods=['GET', 'POST'])
+@login_required
 def view_programs():
     programs = Program.query.order_by(Program.name).all()
     if not programs:
