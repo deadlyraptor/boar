@@ -1,7 +1,7 @@
 # payment.py
 
 from boar import app, db
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, redirect, url_for
 from ..models import Booking, Payment
 from ..forms import PaymentForm
 from ..tables import Bookings, Payments
