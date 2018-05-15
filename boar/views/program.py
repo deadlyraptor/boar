@@ -28,7 +28,8 @@ def new_program():
 @app.route('/programs', methods=['GET', 'POST'])
 @login_required
 def view_programs():
-    programs = Program.query.order_by(Program.name).all()
+    programs = Program.query.order_by(Program.name).filter(
+        Program.organization_id == current_user.organization_id).all()
     if not programs:
         flash('No programs found!')
         return redirect(url_for('index'))

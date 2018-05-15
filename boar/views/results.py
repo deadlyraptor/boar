@@ -13,12 +13,12 @@ def view_results(id):
     """
     View results.
     """
-    results = Booking.query.filter(Booking.id == id).all()
+    booking = Booking.query.filter(Booking.id == id).first()
 
-    film = results[0].film
-    percentage = results[0].percentage
-    guarantee = results[0].guarantee
-    gross = results[0].gross
+    film = booking.film
+    percentage = booking.percentage
+    guarantee = booking.guarantee
+    gross = booking.gross
 
     # overage
     def overage(percentage, guarantee, gross):
@@ -50,8 +50,8 @@ def view_results(id):
 
     finances = [{'film': film, 'overage': overage, 'owed': owed, 'net': net}]
 
-    if not results:
-        flash('No results found!')
+    if not booking:
+        flash('No booking found!')
         return redirect(url_for('open_bookings'))
     else:
         table = Results(finances)

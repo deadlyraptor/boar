@@ -36,7 +36,9 @@ def new_booking():
 @login_required
 def open_bookings():
     bookings = Booking.query.order_by(
-        Booking.start_date).filter(Booking.settled == 0)
+        Booking.start_date).filter(
+        Booking.settled == 0,
+        Booking.organization_id == current_user.organization_id).all()
     if not bookings:
         flash('No open bookings found!')
         return redirect(url_for('index'))
