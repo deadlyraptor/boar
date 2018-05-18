@@ -1,22 +1,24 @@
 # views.py
 
-from boar import app, db
-from flask import Flask, flash, render_template, redirect, url_for
+from boar import app
+from flask import flash, render_template, redirect, url_for
+from flask_login import login_required
 from ..models import Booking
-from ..tables import Distributors, Results
+from ..tables import Results
 
 
 @app.route('/results/<int:id>')
+@login_required
 def view_results(id):
     """
     View results.
     """
-    results = Booking.query.filter(Booking.id == id).all()
+    booking = Booking.query.filter(Booking.id == id).first()
 
-    film = results[0].film
-    percentage = results[0].percentage
-    guarantee = results[0].guarantee
-    gross = results[0].gross
+    film = booking.film
+    percentage = booking.percentage
+    guarantee = booking.guarantee
+    gross = booking.gross
 
     # overage
     def overage(percentage, guarantee, gross):
@@ -48,8 +50,8 @@ def view_results(id):
 
     finances = [{'film': film, 'overage': overage, 'owed': owed, 'net': net}]
 
-    if not results:
-        flash('No results found!')
+    if not booking:
+        flash('No booking found!')
         return redirect(url_for('open_bookings'))
     else:
         table = Results(finances)

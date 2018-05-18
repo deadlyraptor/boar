@@ -1,13 +1,15 @@
 # booking.py
 
 from boar import app, db
-from flask import Flask, flash, render_template, redirect, url_for
-from ..models import Booking, Distributor
+from flask import flash, render_template, redirect, url_for
+from flask_login import login_required, current_user
+from ..models import Booking
 from ..forms import BookingForm
 from ..tables import Bookings
 
 
 @app.route('/booking/new', methods=['GET', 'POST'])
+@login_required
 def new_booking():
     """
     Add a new booking
@@ -21,7 +23,8 @@ def new_booking():
                           percentage=form.percentage.data,
                           start_date=form.start_date.data,
                           end_date=form.end_date.data,
-                          gross=form.gross.data)
+                          gross=form.gross.data,
+                          organization_id=current_user.organization_id)
         db.session.add(booking)
         db.session.commit()
         flash('Booking added successfully!')
@@ -30,9 +33,12 @@ def new_booking():
 
 
 @app.route('/open_bookings')
+@login_required
 def open_bookings():
     bookings = Booking.query.order_by(
-        Booking.start_date).filter(Booking.settled == 0)
+        Booking.start_date).filter(
+        Booking.settled == 0,
+        Booking.organization_id == current_user.organization_id).all()
     if not bookings:
         flash('No open bookings found!')
         return redirect(url_for('index'))
@@ -43,8 +49,14 @@ def open_bookings():
 
 
 @app.route('/booking/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_booking(id):
-    booking = Booking.query.filter(Booking.id == id).first()
+    # check if current user belongs to booking's organization and if not,
+    # render the 404 page because the query returns None
+    booking = Booking.query.filter(
+              Booking.id == id,
+              Booking.organization_id ==
+              current_user.organization_id).first_or_404()
     form = BookingForm(obj=booking)
     if form.validate_on_submit():
         booking.distributor = form.distributor.data
@@ -62,6 +74,7 @@ def edit_booking(id):
 
 
 @app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
 def delete_booking(id):
     booking = Booking.query.filter(Booking.id == id).first()
     if booking:

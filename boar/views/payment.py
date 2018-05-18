@@ -1,13 +1,15 @@
 # payment.py
 
 from boar import app, db
-from flask import Flask, flash, render_template, redirect, url_for
+from flask import flash, render_template, redirect, url_for
+from flask_login import login_required
 from ..models import Booking, Payment
 from ..forms import PaymentForm
-from ..tables import Bookings, Payments
+from ..tables import Payments
 
 
 @app.route('/payment/new/<int:id>', methods=['GET', 'POST'])
+@login_required
 def new_payment(id):
     """
     Add a payment
@@ -27,6 +29,7 @@ def new_payment(id):
 
 
 @app.route('/payments/<int:id>')
+@login_required
 def view_payments(id):
     """
     View payments associated with booking
