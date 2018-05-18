@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
-from .models import Distributor, Program, User
+from .models import Distributor, Program
 
 
 class LoginForm(FlaskForm):

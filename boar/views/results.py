@@ -1,10 +1,10 @@
 # views.py
 
-from boar import app, db
+from boar import app
 from flask import flash, render_template, redirect, url_for
 from flask_login import login_required
 from ..models import Booking
-from ..tables import Distributors, Results
+from ..tables import Results
 
 
 @app.route('/results/<int:id>')

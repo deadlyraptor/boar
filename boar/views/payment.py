@@ -5,7 +5,7 @@ from flask import flash, render_template, redirect, url_for
 from flask_login import login_required
 from ..models import Booking, Payment
 from ..forms import PaymentForm
-from ..tables import Bookings, Payments
+from ..tables import Payments
 
 
 @app.route('/payment/new/<int:id>', methods=['GET', 'POST'])

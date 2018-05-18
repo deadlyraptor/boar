@@ -1,10 +1,10 @@
 # user.py
 
-from flask import render_template, redirect, url_for, request
+from flask import flash, render_template, redirect, url_for, request
 from werkzeug.urls import url_parse
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from boar import app
-from ..models import User
+from ..models import User, Organization
 from ..forms import LoginForm
 
 
@@ -30,3 +30,23 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    profile = User.query.join(Organization, User.organization_id ==
+                              Organization.id).add_columns(
+                              User.username, User.first_name, User.last_name,
+                              User.email, Organization.name).filter(
+                              Organization.id == 1).first_or_404()
+    return render_template('/user/user.html', profile=profile)
+
+
+@app.route('/organization/<id>')
+@login_required
+def organization(id):
+    organization = Organization.query.filter_by(
+        id=current_user.organization_id).first_or_404()
+    return render_template('/user/organization.html',
+                           organization=organization)

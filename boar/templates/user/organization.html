@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Organization{% endblock %}
+
+{% block content %}
+<p>{{ organization.name }}</p>
+<p>{{ organization.address1 }}</p>
+<p>{{ organization.address2 }}</p>
+<p>{{ organization.city }}</p>
+<p>{{ organization.state }}</p>
+<p>{{ organization.zip}}</p>
+
+<ul>
+{% for user in organization.org_users %}
+  <li> {{ user }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

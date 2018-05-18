@@ -3,7 +3,7 @@
 from boar import app, db
 from flask import flash, render_template, redirect, url_for
 from flask_login import login_required, current_user
-from ..models import Booking, Distributor
+from ..models import Booking
 from ..forms import BookingForm
 from ..tables import Bookings
 
@@ -51,7 +51,12 @@ def open_bookings():
 @app.route('/booking/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_booking(id):
-    booking = Booking.query.filter(Booking.id == id).first()
+    # check if current user belongs to booking's organization and if not,
+    # render the 404 page because the query returns None
+    booking = Booking.query.filter(
+              Booking.id == id,
+              Booking.organization_id ==
+              current_user.organization_id).first_or_404()
     form = BookingForm(obj=booking)
     if form.validate_on_submit():
         booking.distributor = form.distributor.data
