@@ -29,7 +29,8 @@ def new_booking():
         db.session.commit()
         flash('Booking added successfully!')
         return redirect(url_for('index'))
-    return render_template('/booking/new.html', form=form)
+    return render_template('/booking/entry.html', title='New',
+                           heading='New', form=form)
 
 
 @app.route('/open_bookings')
@@ -70,7 +71,8 @@ def edit_booking(id):
         db.session.commit()
         flash('Booking updated successfully!')
         return redirect(url_for('index'))
-    return render_template('/booking/edit.html', form=form)
+    return render_template('/booking/entry.html', title='Edit',
+                           heading='Edit', form=form)
 
 
 @app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
@@ -84,4 +86,5 @@ def delete_booking(id):
             db.session.commit()
             flash('Booking deleted successfully!')
             return redirect(url_for('index'))
-        return render_template('/booking/delete.html', form=form)
+        return render_template('/booking/entry.html', title='Delete',
+                               heading='Delete', form=form)

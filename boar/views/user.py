@@ -1,9 +1,9 @@
 # user.py
 
+from boar import app
 from flask import flash, render_template, redirect, url_for, request
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
-from boar import app
 from ..models import User, Organization
 from ..forms import LoginForm
 

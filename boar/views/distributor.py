@@ -27,7 +27,8 @@ def new_distributor():
         db.session.commit()
         flash('Distributor added successfully!')
         return redirect(url_for('index'))
-    return render_template('/distributor/new.html', form=form)
+    return render_template('/distributor/entry.html', title='New',
+                           heading='New', form=form)
 
 
 @app.route('/distributors')
@@ -57,10 +58,10 @@ def edit_distributor(id):
         distributor.state = form.state.data
         distributor.zip = form.zip.data
         db.session.commit()
-        # save_distributor(distributor, form)
         flash('Distributor updated successfully!')
         return redirect(url_for('index'))
-    return render_template('/distributor/edit.html', form=form)
+    return render_template('/distributor/entry.html', title='Edit',
+                           heading='Edit', form=form)
 
 
 @app.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
@@ -77,4 +78,5 @@ def delete_distributor(id):
             db.session.commit()
             flash('Distributor deleted successfully!')
             return redirect(url_for('index'))
-        return render_template('/distributor/delete.html', form=form)
+        return render_template('/distributor/entry.html', title='Delete',
+                               heading='Delete', form=form)

@@ -1,11 +1,10 @@
 {% extends 'booking/booking-base.html' %}
 {% block title %}Open Bookings{% endblock %}
-{% block content %}
 
+{% block content %}
 <h2>Open Booking</h2>
 
 {{ table }}
 
 <p><a href="{{ url_for('.index') }}">Return Home</a></p>
-
 {% endblock %}
