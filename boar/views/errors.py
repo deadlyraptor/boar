@@ -1,3 +1,5 @@
+# errors.py
+
 from flask import render_template
 from boar import app, db
 

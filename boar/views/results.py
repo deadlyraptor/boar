@@ -1,4 +1,4 @@
-# views.py
+# results.py
 
 from boar import app
 from flask import flash, render_template, redirect, url_for
