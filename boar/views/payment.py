@@ -25,7 +25,8 @@ def new_payment(id):
         db.session.commit()
         flash('Payment entered successfully!')
         return redirect(url_for('open_bookings'))
-    return render_template('/payment/new.html', form=form)
+    return render_template('/forms/payment.html', title='New Payment',
+                           heading='New Payment', form=form)
 
 
 @app.route('/payments/<int:id>')

@@ -27,8 +27,8 @@ def new_distributor():
         db.session.commit()
         flash('Distributor added successfully!')
         return redirect(url_for('index'))
-    return render_template('/distributor/entry.html', title='New',
-                           heading='New', form=form)
+    return render_template('/forms/distributor.html', title='New Distributor',
+                           heading='New Distributor', form=form)
 
 
 @app.route('/distributors')
@@ -60,8 +60,8 @@ def edit_distributor(id):
         db.session.commit()
         flash('Distributor updated successfully!')
         return redirect(url_for('index'))
-    return render_template('/distributor/entry.html', title='Edit',
-                           heading='Edit', form=form)
+    return render_template('/forms/distributor.html', title='Edit Distributor',
+                           heading='Edit Distributor', form=form)
 
 
 @app.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
@@ -78,5 +78,6 @@ def delete_distributor(id):
             db.session.commit()
             flash('Distributor deleted successfully!')
             return redirect(url_for('index'))
-        return render_template('/distributor/entry.html', title='Delete',
-                               heading='Delete', form=form)
+        return render_template('/forms/distributor.html',
+                               title='Delete Distributor',
+                               heading='Delete Distributor', form=form)

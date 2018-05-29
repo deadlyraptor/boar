@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}{{ title }} Booking{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h2>{% block heading %}{{ heading }} Booking{% endblock %}</h2>
+<h2>{% block heading %}{{ heading }}{% endblock %}</h2>
 {% from "_formhelpers.html" import render_field %}
 <form method=post>
   <dl>
@@ -22,5 +22,4 @@
 <p><a href="{{ url_for('.open_bookings') }}">Go back</a></p>
 
 <p><a href="{{ url_for('.index') }}">Cancel</a></p>
-
 {% endblock %}

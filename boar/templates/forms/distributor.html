@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}{{ title }} Distributor{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h2>{% block heading %}{{ heading }} Distributor{% endblock %}</h2>
+<h2>{% block heading %}{{ heading }}{% endblock %}</h2>
 {% from "_formhelpers.html" import render_field %}
 <form method=post>
   <dl>

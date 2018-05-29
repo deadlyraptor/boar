@@ -22,7 +22,8 @@ def new_program():
         db.session.commit()
         flash('Program added successfully!')
         return redirect(url_for('index'))
-    return render_template('/program/new.html', form=form)
+    return render_template('/forms/program.html', title='New Program',
+                           heading='New Program', form=form)
 
 
 @app.route('/programs', methods=['GET', 'POST'])
