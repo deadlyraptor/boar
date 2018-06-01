@@ -36,5 +36,4 @@ def view_programs():
         return redirect(url_for('index'))
     else:
         table = Programs(programs)
-        table.border = True
         return render_template('/program/view.html', table=table)

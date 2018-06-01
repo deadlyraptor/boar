@@ -4,6 +4,7 @@ from flask_table import Table, Col, LinkCol, DateCol
 
 
 class Distributors(Table):
+    classes = ['table', 'table-bordered', 'table-striped']
     id = Col('Id', show=False)
     company = Col('Company')
     payee = Col('Payee')
@@ -17,6 +18,7 @@ class Distributors(Table):
 
 
 class Bookings(Table):
+    classes = ['table', 'table-bordered', 'table-striped']
     id = Col('Id', show=False)
     film = Col('Film')
     start_date = DateCol('Start Date')
@@ -37,6 +39,7 @@ class Bookings(Table):
 
 
 class Payments(Table):
+    classes = ['table', 'table-bordered', 'table-striped']
     id = Col('Id', show=False)
     booking = Col('Booking')
     date = DateCol('Date')
@@ -45,6 +48,7 @@ class Payments(Table):
 
 
 class Results(Table):
+    classes = ['table', 'table-bordered', 'table-striped']
     film = Col('Film')
     overage = Col('Overage')
     owed = Col('Owed')
@@ -52,4 +56,5 @@ class Results(Table):
 
 
 class Programs(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'table-sm']
     name = Col('Name')

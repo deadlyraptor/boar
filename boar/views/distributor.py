@@ -40,7 +40,6 @@ def list_distributors():
         return redirect(url_for('index'))
     else:
         table = Distributors(distributors)
-        table.border = True
         return render_template('/distributor/distributors.html', table=table)
 
 

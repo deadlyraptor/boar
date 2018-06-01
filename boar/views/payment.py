@@ -41,5 +41,4 @@ def view_payments(id):
         return redirect(url_for('open_bookings'))
     else:
         table = Payments(payments)
-        table.border = True
         return render_template('/payment/payments.html', table=table)

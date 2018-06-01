@@ -2,17 +2,19 @@
 {% block title %}Organization{% endblock %}
 
 {% block app_content %}
-<h1>Organization</h1>
-<p>{{ organization.name }}</p>
-<p>{{ organization.address1 }}</p>
-<p>{{ organization.address2 }}</p>
-<p>{{ organization.city }}</p>
-<p>{{ organization.state }}</p>
-<p>{{ organization.zip}}</p>
-
-<ul>
-{% for user in organization.org_users %}
-  <li> {{ user }}</li>
-{% endfor %}
-</ul>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://picsum.photos/268/180" alt="Card image cap">
+  <div class="card-body">
+    <h4 class="card-title">{{ organization.name }}</h4>
+    <h5 class="card-title">{{ organization.address1 }}</h5>
+    <h5 class="card-title">{{ organization.address2 }}</h5>
+    <h5 class="card-title">{{ organization.city }}, {{ organization.state }}</h5>
+    <h5 class="card-title">{{ organization.zip }}</h5>
+    <ul class="list-group list-group-flush">
+      {% for user in organization.org_users %}
+      <li class="list-group-item">{{ user.first_name }} {{ user.last_name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 {% endblock %}

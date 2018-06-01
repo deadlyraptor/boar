@@ -45,7 +45,6 @@ def open_bookings():
         return redirect(url_for('index'))
     else:
         table = Bookings(bookings)
-        table.border = True
         return render_template('/booking/open_bookings.html', table=table)
 
 

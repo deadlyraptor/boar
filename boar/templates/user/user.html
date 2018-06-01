@@ -2,8 +2,13 @@
 {% block title %}Profile{% endblock %}
 
 {% block app_content %}
-<h1>Name: {{ profile.first_name }} {{ profile.last_name }}</h1>
-<p>Username: {{ profile.username }}</p>
-<p>Email: {{ profile.email }}</p>
-<p>Organization: {{ profile.name }}</p>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://picsum.photos/268/180" alt="Card image cap">
+  <div class="card-body">
+    <h4 class="card-title">{{ profile.first_name }} {{ profile.last_name }}</h4>
+    <h5 class="card-subtitle mb-2 text-secondary">{{ profile.username }}</h5>
+    <h5 class="card-subtitle mb-2 text-secondary">{{ profile.name }}</h5>
+    <h5 class="card-subtitle mb-2 text-secondary">{{ profile.email }}</h5>
+  </div>
+</div>
 {% endblock %}
