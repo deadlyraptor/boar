@@ -35,11 +35,11 @@ def logout():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-    profile = User.query.join(Organization, User.organization_id ==
+    profile = User.query.join(Organization, current_user.organization_id ==
                               Organization.id).add_columns(
                               User.username, User.first_name, User.last_name,
                               User.email, Organization.name).filter(
-                              Organization.id == 1).first_or_404()
+                              User.id == current_user.id).first_or_404()
     return render_template('/user/user.html', profile=profile)
 
 
