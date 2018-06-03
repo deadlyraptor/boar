@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block app_content %}
+  <h1>{% block heading %}{{ heading }}{% endblock %}</h1>
+  <div>
+    {{ table }}
+  </div>
+{% endblock %}

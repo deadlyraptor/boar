@@ -55,4 +55,5 @@ def view_results(id):
         return redirect(url_for('open_bookings'))
     else:
         table = Results(finances)
-        return render_template('results.html', table=table)
+        return render_template('table.html', table=table,
+                               title='Results', heading='Results')

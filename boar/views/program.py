@@ -22,8 +22,8 @@ def new_program():
         db.session.commit()
         flash('Program added successfully!')
         return redirect(url_for('index'))
-    return render_template('/forms/program.html', title='New Program',
-                           heading='New Program', form=form)
+    return render_template('/forms/program.html', form=form,
+                           title='New Program', heading='New Program')
 
 
 @app.route('/programs', methods=['GET', 'POST'])
@@ -36,4 +36,5 @@ def view_programs():
         return redirect(url_for('index'))
     else:
         table = Programs(programs)
-        return render_template('/program/view.html', table=table)
+        return render_template('/table.html', table=table,
+                               title='Programs', heading='Programs')

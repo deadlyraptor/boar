@@ -25,8 +25,8 @@ def new_payment(id):
         db.session.commit()
         flash('Payment entered successfully!')
         return redirect(url_for('open_bookings'))
-    return render_template('/forms/payment.html', title='New Payment',
-                           heading='New Payment', form=form)
+    return render_template('/forms/payment.html', form=form,
+                           title='New Payment', heading='New Payment')
 
 
 @app.route('/payments/<int:id>')
@@ -41,4 +41,5 @@ def view_payments(id):
         return redirect(url_for('open_bookings'))
     else:
         table = Payments(payments)
-        return render_template('/payment/payments.html', table=table)
+        return render_template('/table.html', table=table,
+                               title='Payments', heading='Payments')
