@@ -45,6 +45,7 @@ class DistributorForm(FlaskForm):
     city = StringField('City', validators=[InputRequired()])
     state = SelectField('State', choices=states)
     zip = StringField('Zip', validators=[InputRequired()])
+    submit = SubmitField('Submit')
 
 
 def query_distributor():
@@ -66,6 +67,7 @@ class BookingForm(FlaskForm):
     start_date = DateField('Start Date', default=datetime.utcnow)
     end_date = DateField('End Date', default=datetime.utcnow)
     gross = IntegerField('Gross', default=0)
+    submit = SubmitField('Submit')
 
 
 class PaymentForm(FlaskForm):
@@ -73,7 +75,9 @@ class PaymentForm(FlaskForm):
     date = DateField('Date', default=datetime.utcnow)
     check_number = StringField('Check Number', validators=[InputRequired()])
     amount = IntegerField('Amount', validators=[InputRequired()])
+    submit = SubmitField('Submit')
 
 
 class ProgramForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired()])
+    submit = SubmitField('Submit')

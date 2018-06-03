@@ -27,8 +27,8 @@ def new_distributor():
         db.session.commit()
         flash('Distributor added successfully!')
         return redirect(url_for('index'))
-    return render_template('/forms/distributor.html', title='New Distributor',
-                           heading='New Distributor', form=form)
+    return render_template('/forms/distributor.html', form=form,
+                           title='New Distributor', heading='New Distributor')
 
 
 @app.route('/distributors')
@@ -40,8 +40,8 @@ def list_distributors():
         return redirect(url_for('index'))
     else:
         table = Distributors(distributors)
-        table.border = True
-        return render_template('/distributor/distributors.html', table=table)
+        return render_template('/table.html', table=table,
+                               title='Distributors', heading='Distributors')
 
 
 @app.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])
@@ -60,8 +60,9 @@ def edit_distributor(id):
         db.session.commit()
         flash('Distributor updated successfully!')
         return redirect(url_for('index'))
-    return render_template('/forms/distributor.html', title='Edit Distributor',
-                           heading='Edit Distributor', form=form)
+    return render_template('/forms/distributor.html', form=form,
+                           title='Edit Distributor',
+                           heading='Edit Distributor')
 
 
 @app.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
@@ -78,6 +79,6 @@ def delete_distributor(id):
             db.session.commit()
             flash('Distributor deleted successfully!')
             return redirect(url_for('index'))
-        return render_template('/forms/distributor.html',
+        return render_template('/forms/distributor.html', form=form,
                                title='Delete Distributor',
-                               heading='Delete Distributor', form=form)
+                               heading='Delete Distributor')

@@ -29,8 +29,8 @@ def new_booking():
         db.session.commit()
         flash('Booking added successfully!')
         return redirect(url_for('index'))
-    return render_template('/forms/booking.html', title='New Booking',
-                           heading='New Booking', form=form)
+    return render_template('/forms/booking.html', form=form,
+                           title='New Booking', heading='New Booking')
 
 
 @app.route('/open_bookings')
@@ -45,8 +45,8 @@ def open_bookings():
         return redirect(url_for('index'))
     else:
         table = Bookings(bookings)
-        table.border = True
-        return render_template('/booking/open_bookings.html', table=table)
+        return render_template('/table.html', table=table,
+                               title='Open Bookings', heading='Open Bookings')
 
 
 @app.route('/booking/edit/<int:id>', methods=['GET', 'POST'])
@@ -71,8 +71,8 @@ def edit_booking(id):
         db.session.commit()
         flash('Booking updated successfully!')
         return redirect(url_for('index'))
-    return render_template('/forms/booking.html', title='Edit Booking',
-                           heading='Edit Booking', form=form)
+    return render_template('/forms/booking.html', form=form,
+                           title='Edit Booking', heading='Edit Booking')
 
 
 @app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
@@ -86,5 +86,6 @@ def delete_booking(id):
             db.session.commit()
             flash('Booking deleted successfully!')
             return redirect(url_for('index'))
-        return render_template('/forms/booking.html', title='Delete Booking',
-                               heading='Delete Booking', form=form)
+        return render_template('/forms/booking.html', form=form,
+                               title='Delete Booking',
+                               heading='Delete Booking')
