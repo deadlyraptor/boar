@@ -21,6 +21,8 @@ class Organization(db.Model):
     org_programs = db.relationship('Program',
                                    backref='organization', lazy=True)
     org_users = db.relationship('User', backref='organization', lazy=True)
+    org_distributors = db.relationship('Distributor',
+                                       backref='organization', lazy=True)
 
     def __repr__(self):
         return '<Organization {}>'.format(self.name)
@@ -87,6 +89,8 @@ class Distributor(db.Model):
     city = db.Column(db.String)
     state = db.Column(db.String)
     zip = db.Column(db.String)
+
+    organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
 
     bookings = db.relationship('Booking', backref='distributor', lazy=True)
 

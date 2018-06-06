@@ -6,6 +6,7 @@ from wtforms import (StringField, IntegerField, SelectField, PasswordField,
 from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from flask_login import current_user
 from datetime import datetime
 from .models import Distributor, Program
 
@@ -49,11 +50,13 @@ class DistributorForm(FlaskForm):
 
 
 def query_distributor():
-    return Distributor.query.order_by(Distributor.company)
+    return Distributor.query.order_by(Distributor.company).filter(
+        Distributor.organization_id == current_user.organization_id)
 
 
 def query_program():
-    return Program.query.order_by(Program.name)
+    return Program.query.order_by(Program.name).filter(
+        Program.organization_id == current_user.organization_id)
 
 
 class BookingForm(FlaskForm):

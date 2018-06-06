@@ -70,7 +70,7 @@ def edit_booking(id):
         booking.gross = form.gross.data
         db.session.commit()
         flash('Booking updated successfully!')
-        return redirect(url_for('index'))
+        return redirect(url_for('open_bookings'))
     return render_template('/forms/booking.html', form=form,
                            title='Edit Booking', heading='Edit Booking')
 

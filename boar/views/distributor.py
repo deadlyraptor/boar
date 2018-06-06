@@ -2,7 +2,7 @@
 
 from boar import app, db
 from flask import flash, render_template, redirect, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..models import Distributor
 from ..forms import DistributorForm
 from ..tables import Distributors
@@ -22,7 +22,8 @@ def new_distributor():
                                   address2=form.address2.data,
                                   city=form.city.data,
                                   state=form.state.data,
-                                  zip=form.zip.data)
+                                  zip=form.zip.data,
+                                  organization_id=current_user.organization_id)
         db.session.add(distributor)
         db.session.commit()
         flash('Distributor added successfully!')
@@ -34,7 +35,8 @@ def new_distributor():
 @app.route('/distributors')
 @login_required
 def list_distributors():
-    distributors = Distributor.query.order_by(Distributor.company).all()
+    distributors = Distributor.query.order_by(Distributor.company).filter(
+         Distributor.organization_id == current_user.organization_id).all()
     if not distributors:
         flash('No distributors found!')
         return redirect(url_for('index'))
@@ -47,7 +49,9 @@ def list_distributors():
 @app.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_distributor(id):
-    distributor = Distributor.query.filter(Distributor.id == id).first()
+    distributor = Distributor.query.filter(
+        Distributor.id == id,
+        Distributor.organization_id == current_user.organization_id).first()
     form = DistributorForm(obj=distributor)
     if form.validate_on_submit():
         distributor.company = form.company.data
