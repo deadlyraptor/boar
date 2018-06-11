@@ -28,7 +28,7 @@ def new_booking():
         db.session.add(booking)
         db.session.commit()
         flash('Booking added successfully!')
-        return redirect(url_for('index'))
+        return redirect(url_for('open_bookings'))
     return render_template('/forms/booking.html', form=form,
                            title='New Booking', heading='New Booking')
 
@@ -79,13 +79,7 @@ def edit_booking(id):
 @login_required
 def delete_booking(id):
     booking = Booking.query.filter(Booking.id == id).first()
-    if booking:
-        form = BookingForm(obj=booking)
-        if form.validate_on_submit():
-            db.session.delete(booking)
-            db.session.commit()
-            flash('Booking deleted successfully!')
-            return redirect(url_for('index'))
-        return render_template('/forms/booking.html', form=form,
-                               title='Delete Booking',
-                               heading='Delete Booking')
+    db.session.delete(booking)
+    db.session.commit()
+    flash('Booking successfully deleted!')
+    return redirect(url_for('open_bookings'))

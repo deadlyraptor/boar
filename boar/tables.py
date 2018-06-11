@@ -5,7 +5,6 @@ from flask_table import Table, Col, LinkCol, DateCol
 
 class Distributors(Table):
     classes = ['table', 'table-bordered', 'table-striped']
-    id = Col('Id', show=False)
     company = Col('Company')
     payee = Col('Payee')
     address1 = Col('Address Line 1')
@@ -19,7 +18,6 @@ class Distributors(Table):
 
 class Bookings(Table):
     classes = ['table', 'table-bordered', 'table-striped']
-    id = Col('Id', show=False)
     film = Col('Film')
     start_date = DateCol('Start Date')
     end_date = DateCol('End Date')
@@ -35,12 +33,13 @@ class Bookings(Table):
                             url_kwargs=dict(id='id'))
     view_payments = LinkCol('View Payments', 'view_payments',
                             url_kwargs=dict(id='id'))
-    delete = LinkCol('Delete', 'delete_booking', url_kwargs=dict(id='id'))
+    delete = LinkCol('Delete', 'delete_booking', url_kwargs=dict(id='id'),
+                     anchor_attrs={'type': 'button',
+                                   'class': 'btn btn-danger'})
 
 
 class Payments(Table):
     classes = ['table', 'table-bordered', 'table-striped']
-    id = Col('Id', show=False)
     booking = Col('Booking')
     date = DateCol('Date')
     check_number = Col('Check Number')
