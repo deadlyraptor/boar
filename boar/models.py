@@ -66,6 +66,7 @@ class Program(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    active = db.Column(db.Boolean, default=1)
 
     organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
 
@@ -76,6 +77,12 @@ class Program(db.Model):
 
     def __str__(self):
         return '{}'.format(self.name)
+
+    def activate(self):
+        self.active = 1
+
+    def deactivate(self):
+        self.active = 0
 
 
 class Distributor(db.Model):

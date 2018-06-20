@@ -30,7 +30,8 @@ def new_program():
 @login_required
 def view_programs():
     programs = Program.query.order_by(Program.name).filter(
-        Program.organization_id == current_user.organization_id).all()
+        Program.organization_id == current_user.organization_id,
+        Program.active == 1).all()
     if not programs:
         flash('No programs found!')
         return redirect(url_for('index'))
@@ -38,3 +39,13 @@ def view_programs():
         table = Programs(programs)
         return render_template('/table.html', table=table,
                                title='Programs', heading='Programs')
+
+
+@app.route('/programs/<int:id>', methods=['GET', 'POST'])
+@login_required
+def deactivate(id):
+    program = Program.query.filter(Program.id == id).first_or_404()
+    program.active = 0
+    db.session.commit()
+    flash('Program successfully deactived.')
+    return redirect(url_for('view_programs'))

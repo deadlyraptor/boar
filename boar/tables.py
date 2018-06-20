@@ -1,6 +1,6 @@
 # tables.py
 
-from flask_table import Table, Col, LinkCol, DateCol
+from flask_table import Table, Col, LinkCol, DateCol, ButtonCol
 
 
 class Distributors(Table):
@@ -13,7 +13,9 @@ class Distributors(Table):
     state = Col('State')
     zip = Col('Zip')
     edit = LinkCol('Edit', 'edit_distributor', url_kwargs=dict(id='id'))
-    delete = LinkCol('Delete', 'delete_distributor', url_kwargs=dict(id='id'))
+    delete = LinkCol('Delete', 'delete_distributor', url_kwargs=dict(id='id'),
+                     anchor_attrs={'type': 'button',
+                                   'class': 'btn btn-danger'})
 
 
 class Bookings(Table):
@@ -57,3 +59,4 @@ class Results(Table):
 class Programs(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'table-sm']
     name = Col('Name')
+    active = ButtonCol('Deactivate', 'deactivate', url_kwargs=dict(id='id'))
