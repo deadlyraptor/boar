@@ -76,13 +76,7 @@ def delete_distributor(id):
     Delete the item in the database that matches the specified ID in the URL
     """
     distributor = Distributor.query.filter(Distributor.id == id).first()
-    if distributor:
-        form = DistributorForm(obj=distributor)
-        if form.validate_on_submit():
-            db.session.delete(distributor)
-            db.session.commit()
-            flash('Distributor deleted successfully!')
-            return redirect(url_for('index'))
-        return render_template('/forms/distributor.html', form=form,
-                               title='Delete Distributor',
-                               heading='Delete Distributor')
+    db.session.delete(distributor)
+    db.session.commit()
+    flash('Distributor successfully deleted!')
+    return redirect(url_for('list_distributors'))
