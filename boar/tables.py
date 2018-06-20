@@ -51,6 +51,8 @@ class Payments(Table):
 class Results(Table):
     classes = ['table', 'table-bordered', 'table-striped']
     film = Col('Film')
+    gross = Col('Gross')
+    guarantee = Col('Guarantee')
     overage = Col('Overage')
     owed = Col('Owed')
     net = Col('Net')

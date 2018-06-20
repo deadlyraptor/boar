@@ -48,7 +48,8 @@ def view_results(id):
 
     net = net(gross, owed)
 
-    finances = [{'film': film, 'overage': overage, 'owed': owed, 'net': net}]
+    finances = [{'film': film, 'gross': gross, 'guarantee': guarantee,
+                'overage': overage, 'owed': owed, 'net': net}]
 
     if not booking:
         flash('No booking found!')
