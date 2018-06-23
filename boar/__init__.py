@@ -15,8 +15,10 @@ login = LoginManager(app)
 login.login_view = 'login'
 bootstrap = Bootstrap(app)
 
-from .views import (user, program, distributor, booking, payment, results,
-                    errors)
+from boar.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
+
+from .views import user, program, distributor, booking, payment, results
 
 
 @app.route('/')

@@ -56,7 +56,8 @@ def query_distributor():
 
 def query_program():
     return Program.query.order_by(Program.name).filter(
-        Program.organization_id == current_user.organization_id)
+        Program.organization_id == current_user.organization_id,
+        Program.active == 1)
 
 
 class BookingForm(FlaskForm):
