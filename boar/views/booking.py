@@ -49,9 +49,9 @@ def open_bookings():
                                title='Open Bookings', heading='Open Bookings')
 
 
-@app.route('/booking/edit/<int:id>', methods=['GET', 'POST'])
+@app.route('/booking/update/<int:id>', methods=['GET', 'POST'])
 @login_required
-def edit_booking(id):
+def update_booking(id):
     # check if current user belongs to booking's organization and if not,
     # render the 404 page because the query returns None
     booking = Booking.query.filter(
@@ -72,7 +72,7 @@ def edit_booking(id):
         flash('Booking updated successfully!')
         return redirect(url_for('open_bookings'))
     return render_template('/forms/booking.html', form=form,
-                           title='Edit Booking', heading='Edit Booking')
+                           title='Update Booking', heading='Update Booking')
 
 
 @app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
