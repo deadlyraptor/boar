@@ -42,8 +42,9 @@ def list_distributors():
         return redirect(url_for('index'))
     else:
         table = Distributors(distributors)
-        return render_template('/table.html', table=table,
-                               title='Distributors', heading='Distributors')
+        return render_template('/distributor_table.html', table=table,
+                               title='Distributors', heading='Distributors',
+                               distributors=distributors)
 
 
 @app.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])

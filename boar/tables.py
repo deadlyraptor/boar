@@ -1,23 +1,6 @@
 # tables.py
 
-from flask_table import Table, Col, LinkCol, DateCol, ButtonCol
-
-
-class Distributors(Table):
-    classes = ['table', 'table-bordered', 'table-striped']
-    company = Col('Company')
-    payee = Col('Payee')
-    address1 = Col('Address Line 1')
-    address2 = Col('Address Line 2')
-    city = Col('City')
-    state = Col('State')
-    zip = Col('Zip')
-    edit = LinkCol('Edit', 'edit_distributor', url_kwargs=dict(id='id'),
-                   anchor_attrs={'type': 'button',
-                                 'class': 'btn btn-primary'})
-    delete = LinkCol('Delete', 'delete_distributor', url_kwargs=dict(id='id'),
-                     anchor_attrs={'type': 'button',
-                                   'class': 'btn btn-danger'})
+from flask_table import Col, ButtonCol, DateCol, LinkCol, Table
 
 
 class Bookings(Table):
@@ -44,12 +27,35 @@ class Bookings(Table):
                                    'class': 'btn btn-danger'})
 
 
+class Distributors(Table):
+    classes = ['table', 'table-bordered', 'table-striped']
+    company = Col('Company')
+    payee = Col('Payee')
+    address1 = Col('Address Line 1')
+    address2 = Col('Address Line 2')
+    city = Col('City')
+    state = Col('State')
+    zip = Col('Zip')
+    edit = LinkCol('Edit', 'edit_distributor', url_kwargs=dict(id='id'),
+                   anchor_attrs={'type': 'button',
+                                 'class': 'btn btn-primary'})
+    delete = LinkCol('Delete', 'delete_distributor', url_kwargs=dict(id='id'),
+                     anchor_attrs={'type': 'button',
+                                   'class': 'btn btn-danger'})
+
+
 class Payments(Table):
     classes = ['table', 'table-bordered', 'table-striped']
     booking = Col('Booking')
     date = DateCol('Date')
     check_number = Col('Check Number')
     amount = Col('Amount')
+
+
+class Programs(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'table-sm']
+    name = Col('Name')
+    active = ButtonCol('Deactivate', 'deactivate', url_kwargs=dict(id='id'))
 
 
 class Results(Table):
@@ -60,9 +66,3 @@ class Results(Table):
     overage = Col('Overage')
     owed = Col('Owed')
     net = Col('Net')
-
-
-class Programs(Table):
-    classes = ['table', 'table-bordered', 'table-striped', 'table-sm']
-    name = Col('Name')
-    active = ButtonCol('Deactivate', 'deactivate', url_kwargs=dict(id='id'))

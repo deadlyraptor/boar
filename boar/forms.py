@@ -1,13 +1,13 @@
 # forms.py
 
+from datetime import datetime
 from flask_wtf import FlaskForm
-from wtforms import (StringField, IntegerField, SelectField, PasswordField,
-                     BooleanField, SubmitField)
+from wtforms import (BooleanField, IntegerField, PasswordField, SelectField,
+                     StringField, SubmitField)
 from wtforms.validators import InputRequired
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from flask_login import current_user
-from datetime import datetime
 from .models import Distributor, Program
 
 

@@ -1,10 +1,10 @@
 # user.py
 
 from boar import app
-from flask import flash, render_template, redirect, url_for, request
+from flask import flash, redirect, render_template, request, url_for
 from werkzeug.urls import url_parse
-from flask_login import current_user, login_user, logout_user, login_required
-from ..models import User, Organization
+from flask_login import current_user, login_required, login_user, logout_user
+from ..models import Organization, User
 from ..forms import LoginForm
 
 
@@ -35,8 +35,9 @@ def logout():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-    profile = User.query.join(Organization, current_user.organization_id ==
-                              Organization.id).add_columns(
+    profile = User.query.join(Organization,
+                              current_user.organization_id == Organization.id
+                              ).add_columns(
                               User.username, User.first_name, User.last_name,
                               User.email, Organization.name).filter(
                               User.id == current_user.id).first_or_404()

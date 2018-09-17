@@ -18,7 +18,7 @@ bootstrap = Bootstrap(app)
 from boar.errors import bp as errors_bp
 app.register_blueprint(errors_bp)
 
-from .views import user, program, distributor, booking, payment, results
+from .views import booking, distributor, payment, program, results, user
 
 
 @app.route('/')

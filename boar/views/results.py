@@ -1,7 +1,7 @@
 # results.py
 
 from boar import app
-from flask import flash, render_template, redirect, url_for
+from flask import flash, redirect, render_template, url_for
 from flask_login import login_required
 from ..models import Booking
 from ..tables import Results
@@ -49,7 +49,7 @@ def view_results(id):
     net = net(gross, owed)
 
     finances = [{'film': film, 'gross': gross, 'guarantee': guarantee,
-                'overage': overage, 'owed': owed, 'net': net}]
+                 'overage': overage, 'owed': owed, 'net': net}]
 
     if not booking:
         flash('No booking found!')
