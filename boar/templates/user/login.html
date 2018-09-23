@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+  <h1>Login</h1>
+  <div>
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <p>{{ form.username.label }}: {{ form.username() }}</p>
+      <p>{{ form.password.label }}: {{ form.password() }}</p>
+      <p>{{ form.remember_me.label }}: {{ form.remember_me() }}</p>
+      <p>{{ form.submit.label }}: {{ form.submit() }}</p>
+    </form>
+  </div>
+{% endblock %}

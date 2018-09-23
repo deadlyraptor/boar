@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block app_content %}
+  <h1>{% block heading %}{{ heading }}{% endblock %}</h1>
+  <div>
+    {{ table }}
+  </div>
+  <br />
+  <br />
+  <div>
+    <table class="table" data-sorting="true">
+      <thead>
+        <tr>
+            <th>Company</th>
+            <th>Payee</th>
+            <th>Address 1</th>
+            <th>Address 2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for distributor in distributors %}
+        <tr>
+          <td>{{ distributor.company }}</td>
+          <td>{{ distributor.payee }}</td>
+          <td>{{ distributor.address1 }}</td>
+          <td>{{ distributor.address2 }}</td>
+          <td>{{ distributor.city }}</td>
+          <td>{{ distributor.state }}</td>
+          <td>{{ distributor.zip }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

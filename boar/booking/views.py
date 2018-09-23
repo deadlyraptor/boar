@@ -1,10 +1,10 @@
-# booking.py
+# views for bookings
 
 from boar import app, db
 from flask import flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from ..models import Booking
-from ..forms import BookingForm
+from .forms import BookingForm
 from ..tables import Bookings
 
 
@@ -29,7 +29,7 @@ def new_booking():
         db.session.commit()
         flash('Booking added successfully!')
         return redirect(url_for('open_bookings'))
-    return render_template('/forms/booking.html', form=form,
+    return render_template('/booking/booking.html', form=form,
                            title='New Booking', heading='New Booking')
 
 
@@ -71,7 +71,7 @@ def update_booking(id):
         db.session.commit()
         flash('Booking updated successfully!')
         return redirect(url_for('open_bookings'))
-    return render_template('/forms/booking.html', form=form,
+    return render_template('/booking/booking.html', form=form,
                            title='Update Booking', heading='Update Booking')
 
 
