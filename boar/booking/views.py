@@ -27,7 +27,7 @@ def new_booking():
                           organization_id=current_user.organization_id)
         db.session.add(booking)
         db.session.commit()
-        flash('Booking added successfully!')
+        flash('Booking entered.', 'success')
         return redirect(url_for('open_bookings'))
     return render_template('/booking/booking.html', form=form,
                            title='New Booking', heading='New Booking')
@@ -41,7 +41,7 @@ def open_bookings():
         Booking.settled == 0,
         Booking.organization_id == current_user.organization_id).all()
     if not bookings:
-        flash('No open bookings found!')
+        flash('No open bookings found.', 'warning')
         return redirect(url_for('index'))
     else:
         table = Bookings(bookings)
@@ -69,7 +69,7 @@ def update_booking(id):
         booking.end_date = form.end_date.data
         booking.gross = form.gross.data
         db.session.commit()
-        flash('Booking updated successfully!')
+        flash('Booking updated.', 'success')
         return redirect(url_for('open_bookings'))
     return render_template('/booking/booking.html', form=form,
                            title='Update Booking', heading='Update Booking')
@@ -81,5 +81,5 @@ def delete_booking(id):
     booking = Booking.query.filter(Booking.id == id).first()
     db.session.delete(booking)
     db.session.commit()
-    flash('Booking successfully deleted!')
+    flash('Booking deleted.', 'success')
     return redirect(url_for('open_bookings'))

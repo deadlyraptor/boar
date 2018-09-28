@@ -1,21 +1,47 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock %}
-
-{% block app_content %}
-  <h1>{% block heading %}{{ heading }}{% endblock %}</h1>
-  <div>
+{% block content %}
+  <div class="container">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
-      <p>{{ form.distributor.label }}: {{form.distributor() }}</p>
-      <p>{{ form.film.label }}: {{form.film() }}</p>
-      <p>{{ form.program.label }}: {{form.program() }}</p>
-      <p>{{ form.guarantee.label }}: {{form.guarantee() }}</p>
-      <p>{{ form.percentage.label }}: {{form.percentage() }}</p>
-      <p>{{ form.start_date.label }}: {{form.start_date() }}</p>
-      <p>{{ form.end_date.label }}: {{form.end_date() }}</p>
-      <p>{{ form.gross.label }}: {{form.gross() }}</p>
-      <p>{{ form.gross.label }}: {{form.gross() }}</p>
-      <p>{{ form.submit.label }}: {{ form.submit() }}</p>
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">{% block heading %}{{ heading }}{% endblock %}</legend>
+        <div class="form-group">
+          {{ form.distributor.label(class="form-control-label") }}
+          {{ form.distributor(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.film.label(class="form-control-label") }}
+          {{ form.film(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.program.label(class="form-control-label") }}
+          {{ form.program(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.guarantee.label(class="form-control-label") }}
+          {{ form.guarantee(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.percentage.label(class="form-control-label") }}
+          {{ form.percentage(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.start_date.label(class="form-control-label") }}
+          {{ form.start_date(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.end_date.label(class="form-control-label") }}
+          {{ form.end_date(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.gross.label(class="form-control-label") }}
+          {{ form.gross(class="form-control") }}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
     </form>
   </div>
-{% endblock %}
+{% endblock content %}
