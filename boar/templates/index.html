@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Boar - Box Office Payments{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
-{% block app_content %}
-{% if current_user.is_authenticated %}
-<h1>Hi, {{ current_user.first_name }}!</h1>
-<p>Welcome to Boar.</p>
-{% else %}
-<h1>Welcome to Boar!</h1>
-<p>Registration is currently closed.</p>
-<p>If you have an account and want to login, click <a href='{{ url_for('login') }}'>here</a>.</p>
-{% endif %}
-{% endblock %}
+{% block content %}
+  {% if current_user.is_authenticated %}
+    <h1>Hi, {{ current_user.first_name }}!</h1>
+    <p>Welcome to Boar.</p>
+  {% else %}
+    <h1>Welcome to Boar!</h1>
+    <p>Registration is currently closed.</p>
+    <p>If you have an account and want to login, click <a href='{{ url_for('login') }}'>here</a>.</p>
+  {% endif %}
+{% endblock content %}

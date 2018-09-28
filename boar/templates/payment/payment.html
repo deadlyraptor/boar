@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <h1>{% block heading %}{{ heading }}{% endblock %}</h1>
+  <div>
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <p>{{form.film.label }}: {{ form.film() }}</p>
+      <p>{{form.date.label }}: {{ form.date() }}</p>
+      <p>{{form.check_number.label }}: {{ form.check_number() }}</p>
+      <p>{{form.amount.label }}: {{ form.amount() }}</p>
+      <p>{{form.submit.label }}: {{ form.submit() }}</p>
+    </form>
+  </div>
+{% endblock %}

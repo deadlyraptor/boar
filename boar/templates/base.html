@@ -1,56 +1,93 @@
-{% extends 'bootstrap/base.html' %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block title %}
-    {% if title %}{{ title }} - Boar {% else %}Welcome to Boar{% endif %}
-{% endblock %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-{% block navbar %}
-  <nav class='navbar navbar-default'>
-    <div class='container'>
-      <div class='navbar-header'>
-        <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1' aria-expanded='false'>
-          <span class='sr-only'>Toggle navigation</span>
-          <span class='icon-bar'></span>
-          <span class='icon-bar'></span>
-          <span class='icon-bar'></span>
-        </button>
-        <a class='navbar-brand' href='{{ url_for('index') }}'>Boar</a>
-      </div>
-      <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
-        <ul class='nav navbar-nav'>
-          <li><a href='{{ url_for('index') }}'>Home</a></li>
-        </ul>
-        <ul class='nav navbar-nav navbar-right'>
-          {% if current_user.is_anonymous %}
-          <li><a href='{{ url_for('login') }}'>Login</a></li>
-          {% else %}
-          <li><a href='{{ url_for('logout') }}'>Logout</a></li>
-          <li><a href='{{ url_for('user', username=current_user.username) }}'>Profile</a></li>
-          <li><a href='{{ url_for('organization', id=current_user.organization_id) }}'>Organization</a></li>
-          {% endif %}
-          <li><a href='{{ url_for('new_booking') }}'>New Booking</a></li>
-          <li><a href='{{ url_for('open_bookings') }}'>Open Bookings</a></li>
-          <li><a href='{{ url_for('new_distributor') }}'>New Distributor</a></li>
-          <li><a href='{{ url_for('list_distributors') }}'>Distributors</a></li>
-          <li><a href='{{ url_for('new_program') }}'>New Program</a></li>
-          <li><a href='{{ url_for('view_programs') }}'>View Programs</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-{% endblock %}
-
-{% block content %}
-  <div class='container'>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-        <div class='alert alert-info' role='alert'>{{ message }}</div>
-        {% endfor %}
+    {% if title %}
+    <title>{{ title }} - Boar</title>
+    {% else %}
+    <title>Boar</title>
     {% endif %}
-    {% endwith %}
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <header>
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="/">Boar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="container navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <div class="dropdown">
+                  <a class="nav-item nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Bookings
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item nav-item nav-link" href="{{ url_for('new_booking') }}">New Booking</a>
+                    <a class="dropdown-item nav-item nav-link" href="{{ url_for('open_bookings') }}">Open Bookings</a>
+                  </div>
+                </div>
+                <div class="dropdown">
+                  <a class="nav-item nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Distributors
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="nav-item nav-link" href="{{ url_for('new_distributor') }}">New Distributor</a>
+                    <a class="nav-item nav-link" href="{{ url_for('list_distributors') }}">Distributors</a>
+                  </div>
+                </div>
+                <div class="dropdown">
+                  <a class="nav-item nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Programs
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="nav-item nav-link" href="{{ url_for('new_program') }}">New Program</a>
+                    <a class="nav-item nav-link" href="{{ url_for('view_programs') }}">View Programs</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Navbar Right Side-->
+              <div class="navbar-nav">
+                {% if current_user.is_anonymous %}
+                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                {% else %}
+                <a class="nav-item nav-link" href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+                <a class="nav-item nav-link" href="{{ url_for('organization', id=current_user.organization_id) }}">Organization</a>
+                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class='alert alert-{{ category }}'>
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock content %}
+          </div>
+        </div>
+      </main>
 
-    {# application content needs to be provided in the app_content block #}
-    {% block app_content %}{% endblock %}
-  </div>
-{% endblock %}
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,10 +1,10 @@
-# payment.py
+# views for payments
 
 from boar import app, db
 from flask import flash, redirect, render_template, url_for
 from flask_login import login_required
 from ..models import Booking, Payment
-from ..forms import PaymentForm
+from .forms import PaymentForm
 from ..tables import Payments
 
 
@@ -25,7 +25,7 @@ def new_payment(id):
         db.session.commit()
         flash('Payment entered successfully!')
         return redirect(url_for('open_bookings'))
-    return render_template('/forms/payment.html', form=form,
+    return render_template('/payment/payment.html', form=form,
                            title='New Payment', heading='New Payment')
 
 

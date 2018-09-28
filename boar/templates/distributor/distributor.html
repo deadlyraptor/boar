@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+  <div class="container">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">{% block heading %}{{ heading }}{% endblock %}</legend>
+        <div class="form-group">
+          {{ form.company.label(class="form-control-label") }}
+          {{ form.company(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.payee.label(class="form-control-label") }}
+          {{ form.payee(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.address1.label(class="form-control-label") }}
+          {{ form.address1(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.address2.label(class="form-control-label") }}
+          {{ form.address2(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.city.label(class="form-control-label") }}
+          {{ form.city(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.state.label(class="form-control-label") }}
+          {{ form.state(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.zip.label(class="form-control-label") }}
+          {{ form.zip(class="form-control") }}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+    </form>
+  </div>
+{% endblock content %}

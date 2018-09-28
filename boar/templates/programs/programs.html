@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <h1>{% block heading %}{{ heading }}{% endblock %}</h1>
+  <div>
+    {{ table }}
+  </div>
+  <br />
+  <br />
+  <div>
+    <table id="programs" class="table" style="width:100%">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for program in programs %}
+        <tr>
+          <td>{{ program.name }}</td>
+          <td>{{ program.active }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

@@ -1,10 +1,10 @@
-# distributor.py
+# views for distributors
 
 from boar import app, db
 from flask import flash, render_template, redirect, url_for
 from flask_login import login_required, current_user
 from ..models import Distributor
-from ..forms import DistributorForm
+from .forms import DistributorForm
 from ..tables import Distributors
 
 
@@ -28,7 +28,7 @@ def new_distributor():
         db.session.commit()
         flash('Distributor added successfully!')
         return redirect(url_for('index'))
-    return render_template('/forms/distributor.html', form=form,
+    return render_template('/distributor/distributor.html', form=form,
                            title='New Distributor', heading='New Distributor')
 
 
@@ -42,8 +42,9 @@ def list_distributors():
         return redirect(url_for('index'))
     else:
         table = Distributors(distributors)
-        return render_template('/distributor_table.html', table=table,
-                               title='Distributors', heading='Distributors',
+        return render_template('/distributor/distributor_table.html',
+                               table=table, title='Distributors',
+                               heading='Distributors',
                                distributors=distributors)
 
 
@@ -65,7 +66,7 @@ def edit_distributor(id):
         db.session.commit()
         flash('Distributor updated successfully!')
         return redirect(url_for('index'))
-    return render_template('/forms/distributor.html', form=form,
+    return render_template('/distributor/distributor.html', form=form,
                            title='Edit Distributor',
                            heading='Edit Distributor')
 
