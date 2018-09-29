@@ -1,11 +1,12 @@
 # views for users
 
-from boar import app
+import os
+import secrets
+from boar import app, db
 from flask import flash, redirect, render_template, request, url_for
-from werkzeug.urls import url_parse
 from flask_login import current_user, login_required, login_user, logout_user
 from ..models import Organization, User
-from .forms import LoginForm
+from .forms import LoginForm, UpdateAccountForm
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -15,16 +16,14 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not user.check_password(form.password.data):
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            flash(f'You have logged in!', 'success')
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('index'))
+        else:
             flash('Invalid username or password', 'danger')
             return redirect(url_for('login'))
-        else:
-            flash(f'You have logged in!', 'success')
-        login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
-        return redirect(next_page)
     return render_template('/user/login.html', form=form)
 
 
@@ -34,16 +33,35 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/user/<username>')
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/images', picture_fn)
+    form_picture.save(picture_path)
+    return picture_fn
+
+
+@app.route('/account/<username>', methods=['GET', 'POST'])
 @login_required
-def user(username):
-    profile = User.query.join(Organization,
-                              current_user.organization_id == Organization.id
-                              ).add_columns(
-                              User.username, User.first_name, User.last_name,
-                              User.email, Organization.name).filter(
-                              User.id == current_user.id).first_or_404()
-    return render_template('/user/profile.html', profile=profile)
+def account(username):
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.profile_photo = picture_file
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    profile_photo = url_for('static',
+                            filename='images/' + current_user.profile_photo)
+    return render_template('/user/account.html', title='Account',
+                           profile_photo=profile_photo, form=form)
 
 
 @app.route('/organization/<id>')
