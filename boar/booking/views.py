@@ -30,7 +30,7 @@ def new_booking():
         flash('Booking entered.', 'success')
         return redirect(url_for('open_bookings'))
     return render_template('/booking/booking.html', form=form,
-                           title='New Booking', heading='New Booking')
+                           title='New Booking', legend='New Booking')
 
 
 @app.route('/open_bookings')
@@ -72,7 +72,7 @@ def update_booking(id):
         flash('Booking updated.', 'success')
         return redirect(url_for('open_bookings'))
     return render_template('/booking/booking.html', form=form,
-                           title='Update Booking', heading='Update Booking')
+                           title='Update Booking', legend='Update Booking')
 
 
 @app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])

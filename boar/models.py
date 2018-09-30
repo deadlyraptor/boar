@@ -36,6 +36,25 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def set_organization(self, name):
+        """
+        If the user enters an existing organization, this function will add the
+        appropriate relationship.
+
+        If the user does not enter an existing organization, this function will
+        create it and add the appropriate relationship. Note that only the
+        organization's name is added to the model. The user must update the
+        other fields separetly.
+        """
+        organization = Organization.query.filter_by(name=name).first()
+        if organization is None:
+            organization = Organization(name=name)
+            db.session.add(organization)
+            db.session.commit()
+            self.organization_id = organization.id
+        else:
+            self.organization_id = organization.id
+
 
 class Organization(db.Model):
     __tablename__ = 'organizations'
@@ -129,7 +148,7 @@ class Booking(db.Model):
     payments = db.relationship('Payment', backref='booking', lazy=True)
 
     def __repr__(self):
-        return f'<Booking {self.film}>'
+        return f'<Booking {self.film} {self.start_date}>'
 
     def __str__(self):
         return f'{self.film}'
