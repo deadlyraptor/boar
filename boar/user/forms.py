@@ -74,3 +74,22 @@ class OrganizationForm(FlaskForm):
         organization = Organization.query.filter_by(name=name.data).first()
         if organization:
             raise ValidationError('That organization already exists.')
+
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email', validators=[InputRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('There is no account with that email.\
+                                  You must register first.')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[InputRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[InputRequired(),
+                                                 EqualTo('password')])
+    submit = SubmitField('Reset Password')

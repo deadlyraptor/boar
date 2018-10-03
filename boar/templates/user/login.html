@@ -6,12 +6,30 @@
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">Log In</legend>
         <div class="form-group">
-          {{ form.username.label(class="form-control-label") }}
+        {{ form.username.label(class="form-control-label") }}
+        {% if form.username.errors %}
+          {{ form.username(class="form-control is-invalud") }}
+          <div class="invalid-feedback">
+            {% for error in form.username.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
           {{ form.username(class="form-control") }}
+        {% endif %}
         </div>
         <div class="form-group">
           {{ form.password.label(class="form-control-label") }}
-          {{ form.password(class="form-control")}}
+          {% if form.password.errors %}
+            {{ form.password(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.password(class="form-control") }}
+          {% endif %}
         </div>
         <div class="form-check">
           {{ form.remember_me(class="form-check-input") }}
@@ -19,7 +37,15 @@
       </fieldset>
       <div class="form-group">
         {{ form.submit(class="btn btn-outline-info")}}
+        <small class="text-muted ml-2">
+          <a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+        </small>
       </div>
     </form>
+  </div>
+  <div class="border-top pt-3">
+    <small class="text-muted">
+      Need an account? <a class="ml-2" href="{{ url_for('register') }}">Sign up now</a>
+    </small>
   </div>
 {% endblock content %}
