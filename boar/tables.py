@@ -12,17 +12,19 @@ class Bookings(Table):
     guarantee = Col('Guarantee')
     percentage = Col('Percentage')
     gross = Col('Gross')
-    view_results = LinkCol('View Results', 'view_results',
+    view_results = LinkCol('View Results', 'results.view_results',
                            url_kwargs=dict(id='id'))
     distributor = Col('Distributor')
-    enter_payment = LinkCol('Enter Payment', 'new_payment',
+    enter_payment = LinkCol('Enter Payment', 'payments_bp.new_payment',
                             url_kwargs=dict(id='id'))
-    view_payments = LinkCol('View Payments', 'view_payments',
+    view_payments = LinkCol('View Payments', 'payments_bp.view_payments',
                             url_kwargs=dict(id='id'))
-    update = LinkCol('Update', 'update_booking', url_kwargs=dict(id='id'),
+    update = LinkCol('Update', 'booking_bp.update_booking',
+                     url_kwargs=dict(id='id'),
                      anchor_attrs={'type': 'button',
                                    'class': 'btn btn-primary'})
-    delete = LinkCol('Delete', 'delete_booking', url_kwargs=dict(id='id'),
+    delete = LinkCol('Delete', 'booking_bp.delete_booking',
+                     url_kwargs=dict(id='id'),
                      anchor_attrs={'type': 'button',
                                    'class': 'btn btn-danger'})
 
@@ -36,10 +38,12 @@ class Distributors(Table):
     city = Col('City')
     state = Col('State')
     zip = Col('Zip')
-    edit = LinkCol('Edit', 'edit_distributor', url_kwargs=dict(id='id'),
+    edit = LinkCol('Edit', 'distributors_bp.edit_distributor',
+                   url_kwargs=dict(id='id'),
                    anchor_attrs={'type': 'button',
                                  'class': 'btn btn-primary'})
-    delete = LinkCol('Delete', 'delete_distributor', url_kwargs=dict(id='id'),
+    delete = LinkCol('Delete', 'distributors_bp.delete_distributor',
+                     url_kwargs=dict(id='id'),
                      anchor_attrs={'type': 'button',
                                    'class': 'btn btn-danger'})
 
@@ -55,7 +59,8 @@ class Payments(Table):
 class Programs(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'table-sm']
     name = Col('Name')
-    active = ButtonCol('Deactivate', 'deactivate', url_kwargs=dict(id='id'))
+    active = ButtonCol('Deactivate', 'programs_bp.deactivate',
+                       url_kwargs=dict(id='id'))
 
 
 class Results(Table):

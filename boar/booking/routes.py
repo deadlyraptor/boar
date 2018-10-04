@@ -1,14 +1,16 @@
-# views for bookings
+# routes for bookings
 
-from boar import app, db
-from flask import flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from ..models import Booking
 from .forms import BookingForm
 from ..tables import Bookings
+from boar import db
+
+booking_bp = Blueprint('booking_bp', __name__)
 
 
-@app.route('/booking/new', methods=['GET', 'POST'])
+@booking_bp.route('/booking/new', methods=['GET', 'POST'])
 @login_required
 def new_booking():
     """
@@ -33,7 +35,7 @@ def new_booking():
                            title='New Booking', legend='New Booking')
 
 
-@app.route('/open_bookings')
+@booking_bp.route('/open_bookings')
 @login_required
 def open_bookings():
     bookings = Booking.query.order_by(
@@ -42,14 +44,14 @@ def open_bookings():
         Booking.organization_id == current_user.organization_id).all()
     if not bookings:
         flash('No open bookings found.', 'warning')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     else:
         table = Bookings(bookings)
         return render_template('/table.html', table=table,
                                title='Open Bookings', heading='Open Bookings')
 
 
-@app.route('/booking/update/<int:id>', methods=['GET', 'POST'])
+@booking_bp.route('/booking/update/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update_booking(id):
     # check if current user belongs to booking's organization and if not,
@@ -75,7 +77,7 @@ def update_booking(id):
                            title='Update Booking', legend='Update Booking')
 
 
-@app.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
+@booking_bp.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_booking(id):
     booking = Booking.query.filter(Booking.id == id).first()

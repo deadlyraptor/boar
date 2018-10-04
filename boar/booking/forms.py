@@ -6,19 +6,7 @@ from wtforms import IntegerField, StringField, SubmitField
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import InputRequired
-from flask_login import current_user
-from ..models import Distributor, Program
-
-
-def query_distributor():
-    return Distributor.query.order_by(Distributor.company).filter(
-        Distributor.organization_id == current_user.organization_id)
-
-
-def query_program():
-    return Program.query.order_by(Program.name).filter(
-        Program.organization_id == current_user.organization_id,
-        Program.active == 1)
+from boar.booking.utils import query_distributor, query_program
 
 
 class BookingForm(FlaskForm):

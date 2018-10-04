@@ -1,13 +1,14 @@
 # results.py
 
-from boar import app
-from flask import flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import login_required
 from ..models import Booking
 from ..tables import Results
 
+results = Blueprint('results', __name__)
 
-@app.route('/results/<int:id>')
+
+@results.route('/results/<int:id>')
 @login_required
 def view_results(id):
     """
@@ -53,7 +54,7 @@ def view_results(id):
 
     if not booking:
         flash('No booking found!')
-        return redirect(url_for('open_bookings'))
+        return redirect(url_for('booking_bp.open_bookings'))
     else:
         table = Results(finances)
         return render_template('table.html', table=table,

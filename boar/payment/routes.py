@@ -1,14 +1,16 @@
-# views for payments
+# routes for payments
 
-from boar import app, db
-from flask import flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import login_required
 from ..models import Booking, Payment
 from .forms import PaymentForm
 from ..tables import Payments
+from boar import db
+
+payments_bp = Blueprint('payments_bp', __name__)
 
 
-@app.route('/payment/new/<int:id>', methods=['GET', 'POST'])
+@payments_bp.route('/payment/new/<int:id>', methods=['GET', 'POST'])
 @login_required
 def new_payment(id):
     """
@@ -29,7 +31,7 @@ def new_payment(id):
                            title='New Payment', heading='New Payment')
 
 
-@app.route('/payments/<int:id>')
+@payments_bp.route('/payments/<int:id>')
 @login_required
 def view_payments(id):
     """

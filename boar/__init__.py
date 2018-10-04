@@ -1,37 +1,44 @@
 # __init__.py
 
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 from config import Config
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-login = LoginManager(app)
-login.login_view = 'login'
+db = SQLAlchemy()
+migrate = Migrate()
+login = LoginManager()
+login.login_view = 'users.login'
 login.login_message_category = 'info'
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = app.config['GMAIL_USERNAME']
-app.config['MAIL_PASSWORD'] = app.config['GMAIL_PASSWORD']
-mail = Mail(app)
-
-from boar.errors import bp as errors_bp
-app.register_blueprint(errors_bp)
-
-from .booking import views
-from .distributor import views
-from .payment import views
-from .program import views
-from .results import views
-from .user import views
+mail = Mail()
 
 
-@app.route('/')
-def index():
-    return render_template('index.html', title='Home')
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login.init_app(app)
+    mail.init_app(app)
+
+    from boar.booking.routes import booking_bp
+    from boar.distributor.routes import distributors_bp
+    from boar.errors import errors
+    from boar.payment.routes import payments_bp
+    from boar.program.routes import programs_bp
+    from boar.results.routes import results
+    from boar.user.routes import users
+    from boar.main.routes import main
+    app.register_blueprint(booking_bp)
+    app.register_blueprint(distributors_bp)
+    app.register_blueprint(errors)
+    app.register_blueprint(payments_bp)
+    app.register_blueprint(programs_bp)
+    app.register_blueprint(results)
+    app.register_blueprint(users)
+    app.register_blueprint(main)
+
+    return app

@@ -29,8 +29,8 @@
                   Bookings
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item nav-item nav-link" href="{{ url_for('new_booking') }}">New Booking</a>
-                  <a class="dropdown-item nav-item nav-link" href="{{ url_for('open_bookings') }}">Open Bookings</a>
+                  <a class="dropdown-item nav-item nav-link" href="{{ url_for('booking_bp.new_booking') }}">New Booking</a>
+                  <a class="dropdown-item nav-item nav-link" href="{{ url_for('booking_bp.open_bookings') }}">Open Bookings</a>
                 </div>
               </div>
               <div class="dropdown">
@@ -38,8 +38,8 @@
                   Distributors
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="nav-item nav-link" href="{{ url_for('new_distributor') }}">New Distributor</a>
-                  <a class="nav-item nav-link" href="{{ url_for('list_distributors') }}">Distributors</a>
+                  <a class="nav-item nav-link" href="{{ url_for('distributors_bp.new_distributor') }}">New Distributor</a>
+                  <a class="nav-item nav-link" href="{{ url_for('distributors_bp.list_distributors') }}">Distributors</a>
                 </div>
               </div>
               <div class="dropdown">
@@ -47,20 +47,20 @@
                   Programs
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="nav-item nav-link" href="{{ url_for('new_program') }}">New Program</a>
-                  <a class="nav-item nav-link" href="{{ url_for('view_programs') }}">View Programs</a>
+                  <a class="nav-item nav-link" href="{{ url_for('programs_bp.new_program') }}">New Program</a>
+                  <a class="nav-item nav-link" href="{{ url_for('programs_bp.view_programs') }}">View Programs</a>
                 </div>
               </div>
             </div>
             <!-- Navbar Right Side-->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
-              <a class="nav-item nav-link" href="{{ url_for('account', username=current_user.username) }}">Account</a>
-              <a class="nav-item nav-link" href="{{ url_for('organization', id=current_user.organization_id) }}">Organization</a>
-              <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+              <a class="nav-item nav-link" href="{{ url_for('users.account', username=current_user.username) }}">Account</a>
+              <a class="nav-item nav-link" href="{{ url_for('users.organization', id=current_user.organization_id) }}">Organization</a>
+              <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
               {% else %}
-              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-              <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+              <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+              <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
               {% endif %}
             </div>
           </div>

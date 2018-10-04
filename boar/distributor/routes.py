@@ -1,14 +1,16 @@
-# views for distributors
+# routes for distributors
 
-from boar import app, db
-from flask import flash, render_template, redirect, url_for
+from flask import Blueprint, flash, render_template, redirect, url_for
 from flask_login import login_required, current_user
 from ..models import Distributor
 from .forms import DistributorForm
 from ..tables import Distributors
+from boar import db
+
+distributors_bp = Blueprint('distributors_bp', __name__)
 
 
-@app.route('/distributor/new', methods=['GET', 'POST'])
+@distributors_bp.route('/distributor/new', methods=['GET', 'POST'])
 @login_required
 def new_distributor():
     """
@@ -27,19 +29,19 @@ def new_distributor():
         db.session.add(distributor)
         db.session.commit()
         flash('Distributor added successfully!')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     return render_template('/distributor/distributor.html', form=form,
                            title='New Distributor', heading='New Distributor')
 
 
-@app.route('/distributors')
+@distributors_bp.route('/distributors')
 @login_required
 def list_distributors():
     distributors = Distributor.query.order_by(Distributor.company).filter(
          Distributor.organization_id == current_user.organization_id).all()
     if not distributors:
         flash('No distributors found!')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     else:
         table = Distributors(distributors)
         return render_template('/distributor/distributor_table.html',
@@ -48,7 +50,7 @@ def list_distributors():
                                distributors=distributors)
 
 
-@app.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])
+@distributors_bp.route('/distributor/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_distributor(id):
     distributor = Distributor.query.filter(
@@ -65,13 +67,13 @@ def edit_distributor(id):
         distributor.zip = form.zip.data
         db.session.commit()
         flash('Distributor updated successfully!')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     return render_template('/distributor/distributor.html', form=form,
                            title='Edit Distributor',
                            heading='Edit Distributor')
 
 
-@app.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
+@distributors_bp.route('/distributor/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_distributor(id):
     """

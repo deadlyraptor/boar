@@ -1,17 +1,18 @@
-# views for users
+# routes for users
 
-import os
-import secrets
-from boar import app, db, mail
-from flask import flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
-from flask_mail import Message
+from boar import db
 from ..models import Organization, User
 from .forms import (LoginForm, OrganizationForm, RegistrationForm,
                     RequestResetForm, ResetPasswordForm, UpdateAccountForm)
+from boar.user.utils import save_picture, send_reset_email
 
 
-@app.route('/register', methods=['GET', 'POST'])
+users = Blueprint('users', __name__)
+
+
+@users.route('/register', methods=['GET', 'POST'])
 def register():
     """
     Registers a user.
@@ -20,7 +21,7 @@ def register():
     separate model.
     """
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     registration_form = RegistrationForm()
     organization_form = OrganizationForm()
     if registration_form.validate_on_submit():
@@ -40,10 +41,10 @@ def register():
                            organization_form=organization_form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@users.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-            return redirect(url_for('index'))
+            return redirect(url_for('main.index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -51,29 +52,20 @@ def login():
             login_user(user, remember=form.remember_me.data)
             flash(f'You have logged in!', 'success')
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('index'))
+            return redirect(next_page) if next_page else redirect(url_for('main.index'))
         else:
             flash('Invalid username or password', 'danger')
             return redirect(url_for('login'))
     return render_template('/user/login.html', title='Login', form=form)
 
 
-@app.route('/logout')
+@users.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/images', picture_fn)
-    form_picture.save(picture_path)
-    return picture_fn
-
-
-@app.route('/<username>', methods=['GET', 'POST'])
+@users.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def account(username):
     """
@@ -99,7 +91,7 @@ def account(username):
                            profile_photo=profile_photo, form=form)
 
 
-@app.route('/organization/<int:id>')
+@users.route('/organization/<int:id>')
 @login_required
 def organization(id):
     """
@@ -110,23 +102,10 @@ def organization(id):
                            organization=organization)
 
 
-def send_reset_email(user):
-    token = user.get_reset_token()
-    msg = Message('Password Reset Request', sender='jachavez6@gmail.com',
-                  recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link:
-{url_for('reset_token', token=token, _external=True)}
-
-If you did not make this request then simply ignore this email and no changes\
-will be made.
-'''
-    mail.send(msg)
-
-
-@app.route('/reset_password', methods=['GET', 'POST'])
+@users.route('/reset_password', methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -137,10 +116,10 @@ def reset_request():
                            form=form)
 
 
-@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+@users.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid or expired token', 'warning')

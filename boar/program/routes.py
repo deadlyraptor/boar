@@ -1,14 +1,16 @@
-# views for programs
+# routes for programs
 
-from boar import app, db
-from flask import flash, render_template, redirect, url_for
+from flask import Blueprint, flash, render_template, redirect, url_for
 from flask_login import login_required, current_user
 from ..models import Program
 from .forms import ProgramForm
 from ..tables import Programs
+from boar import db
+
+programs_bp = Blueprint('programs_bp', __name__)
 
 
-@app.route('/program/new', methods=['GET', 'POST'])
+@programs_bp.route('/program/new', methods=['GET', 'POST'])
 @login_required
 def new_program():
     """
@@ -21,12 +23,12 @@ def new_program():
         db.session.add(program)
         db.session.commit()
         flash('Program added successfully!')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     return render_template('/programs/new_program.html', form=form,
                            title='New Program', heading='New Program')
 
 
-@app.route('/programs', methods=['GET', 'POST'])
+@programs_bp.route('/programs', methods=['GET', 'POST'])
 @login_required
 def view_programs():
     """
@@ -34,10 +36,11 @@ def view_programs():
     """
     programs = Program.query.order_by(Program.name).filter(
         Program.organization_id == current_user.organization_id).all()
-        # Program.active == 1).all()
-    if not programs:
+    print(programs)
+    print(type(programs))
+    if programs is None:
         flash('No programs found!')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     else:
         table = Programs(programs)
         return render_template('/programs/programs.html',
@@ -45,7 +48,7 @@ def view_programs():
                                heading='Programs', programs=programs)
 
 
-@app.route('/programs/<int:id>', methods=['GET', 'POST'])
+@programs_bp.route('/programs/<int:id>', methods=['GET', 'POST'])
 @login_required
 def deactivate(id):
     program = Program.query.filter(Program.id == id).first_or_404()
