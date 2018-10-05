@@ -6,7 +6,7 @@ from wtforms import IntegerField, StringField, SubmitField
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import InputRequired
-from boar.booking.utils import query_distributor, query_program
+from boar.bookings.utils import query_distributor, query_program
 
 
 class BookingForm(FlaskForm):

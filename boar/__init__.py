@@ -24,12 +24,11 @@ def create_app(config_class=Config):
     login.init_app(app)
     mail.init_app(app)
 
-    from boar.booking.routes import booking_bp
+    from boar.bookings.routes import booking_bp
     from boar.distributor.routes import distributors_bp
     from boar.errors import errors
     from boar.payment.routes import payments_bp
     from boar.program.routes import programs_bp
-    from boar.results.routes import results
     from boar.user.routes import users
     from boar.main.routes import main
     app.register_blueprint(booking_bp)
@@ -37,7 +36,6 @@ def create_app(config_class=Config):
     app.register_blueprint(errors)
     app.register_blueprint(payments_bp)
     app.register_blueprint(programs_bp)
-    app.register_blueprint(results)
     app.register_blueprint(users)
     app.register_blueprint(main)
 

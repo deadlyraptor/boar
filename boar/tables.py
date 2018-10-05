@@ -12,7 +12,7 @@ class Bookings(Table):
     guarantee = Col('Guarantee')
     percentage = Col('Percentage')
     gross = Col('Gross')
-    view_results = LinkCol('View Results', 'results.view_results',
+    view_results = LinkCol('View Results', 'booking_bp.booking_results',
                            url_kwargs=dict(id='id'))
     distributor = Col('Distributor')
     enter_payment = LinkCol('Enter Payment', 'payments_bp.new_payment',
