@@ -1,14 +1,67 @@
 from flask_login import current_user
-from ..models import Distributor, Program
+from ..models import Booking, Distributor, Program
 
 
-def query_distributor():
-    distributor = Distributor.query.order_by(Distributor.company).filter_by(
+def query_distributors():
+    """Returns query on distributors
+
+    This query factory is used to populate the distributors in the
+    booking form.
+    """
+    distributors = Distributor.query.order_by(Distributor.company).filter_by(
         organization_id=current_user.organization_id)
-    return distributor
+    return distributors
 
 
-def query_program():
-    distributor = Program.query.order_by(Program.name).filter_by(
+def query_programs():
+    """Returns query on programs
+
+    This query factory is used to populate the programs in the booking form.
+    """
+    programs = Program.query.order_by(Program.name).filter_by(
         organization_id=current_user.organization_id, active=1)
-    return distributor
+    return programs
+
+
+def results(id):
+    """Returns a dictionary with values pertaining to the performance
+    of a booking
+    """
+    booking = Booking.query.filter_by(id=id).first_or_404()
+
+    film = booking.film
+    percentage = booking.percentage
+    guarantee = booking.guarantee
+    gross = booking.gross
+
+    # overage
+    def overage(percentage, guarantee, gross):
+        if (percentage / 100) * gross > guarantee:
+            overage = (percentage / 100) * gross - guarantee
+            return round(overage, 2)
+        else:
+            overage = 0
+            return overage
+
+    overage = overage(percentage, guarantee, gross)
+
+    # total owed
+    def total_owed(guarantee, overage):
+        owed = guarantee + overage
+        return owed
+
+    owed = total_owed(guarantee, overage)
+
+    # net
+    def net(gross, owed):
+        if gross == 0:
+            net = 0
+        else:
+            net = gross - owed
+        return net
+
+    net = net(gross, owed)
+
+    results = [{'film': film, 'gross': gross, 'guarantee': guarantee,
+                'overage': overage, 'owed': owed, 'net': net}]
+    return results

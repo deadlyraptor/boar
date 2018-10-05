@@ -6,14 +6,14 @@ from wtforms import IntegerField, StringField, SubmitField
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import InputRequired
-from boar.bookings.utils import query_distributor, query_program
+from boar.bookings.utils import query_distributors, query_programs
 
 
 class BookingForm(FlaskForm):
-    distributor = QuerySelectField(query_factory=query_distributor,
+    distributor = QuerySelectField(query_factory=query_distributors,
                                    allow_blank=False, get_label='company')
     film = StringField('Film', validators=[InputRequired()])
-    program = QuerySelectField(query_factory=query_program,
+    program = QuerySelectField(query_factory=query_programs,
                                allow_blank=False, get_label='name')
     guarantee = IntegerField('Guarantee', default=0)
     percentage = IntegerField('Percentage', default=35)

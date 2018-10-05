@@ -6,6 +6,7 @@ from ..models import Booking
 from .forms import BookingForm
 from ..tables import Bookings, Results
 from boar import db
+from boar.bookings.utils import results
 
 booking_bp = Blueprint('booking_bp', __name__)
 
@@ -29,7 +30,7 @@ def new_booking():
                           organization_id=current_user.organization_id)
         db.session.add(booking)
         db.session.commit()
-        flash('Booking entered.', 'success')
+        flash('Booking successfully created.', 'success')
         return redirect(url_for('booking_bp.open_bookings'))
     return render_template('/booking/booking.html', form=form,
                            title='New Booking', legend='New Booking')
@@ -39,6 +40,7 @@ def new_booking():
 @login_required
 def update_booking(id):
     """
+    Updates a booking
     """
     # check if current user belongs to booking's organization and if not,
     # render the 404 page because the query returns None
@@ -57,6 +59,9 @@ def update_booking(id):
 @booking_bp.route('/booking/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_booking(id):
+    """
+    Deletes a booking
+    """
     booking = Booking.query.filter_by(id=id).first()
     db.session.delete(booking)
     db.session.commit()
@@ -67,6 +72,9 @@ def delete_booking(id):
 @booking_bp.route('/open-bookings')
 @login_required
 def open_bookings():
+    """
+    Renders a template with a table containing all unsettled bookings
+    """
     bookings = Booking.query.order_by(
         Booking.start_date).filter_by(
             settled=0, organization_id=current_user.organization_id).all()
@@ -83,47 +91,10 @@ def open_bookings():
 @login_required
 def booking_results(id):
     """
-    Renders a containing a booking's box office performance.
+    Renders a template containing a booking's box office performance.
     """
-    booking = Booking.query.filter_by(id=id).first_or_404()
-
-    film = booking.film
-    percentage = booking.percentage
-    guarantee = booking.guarantee
-    gross = booking.gross
-
-    # overage
-    def overage(percentage, guarantee, gross):
-        if (percentage / 100) * gross > guarantee:
-            overage = (percentage / 100) * gross - guarantee
-            return round(overage, 2)
-        else:
-            overage = 0
-            return overage
-
-    overage = overage(percentage, guarantee, gross)
-
-    # total owed
-    def total_owed(guarantee, overage):
-        owed = guarantee + overage
-        return owed
-
-    owed = total_owed(guarantee, overage)
-
-    # net
-    def net(gross, owed):
-        if gross == 0:
-            net = 0
-        else:
-            net = gross - owed
-        return net
-
-    net = net(gross, owed)
-
-    finances = [{'film': film, 'gross': gross, 'guarantee': guarantee,
-                 'overage': overage, 'owed': owed, 'net': net}]
-
-    if not booking:
+    finances = results(id)
+    if finances is None:
         flash('No booking found!')
         return redirect(url_for('booking_bp.open_bookings'))
     else:
