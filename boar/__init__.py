@@ -31,6 +31,7 @@ def create_app(config_class=Config):
     from boar.program.routes import programs_bp
     from boar.user.routes import users
     from boar.main.routes import main
+    from boar.utils.filters import filters
     app.register_blueprint(booking_bp)
     app.register_blueprint(distributors_bp)
     app.register_blueprint(errors)
@@ -38,5 +39,6 @@ def create_app(config_class=Config):
     app.register_blueprint(programs_bp)
     app.register_blueprint(users)
     app.register_blueprint(main)
+    app.register_blueprint(filters)
 
     return app
