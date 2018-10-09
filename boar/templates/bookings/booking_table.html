@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{% block heading %}{{ heading }}{% endblock %}</h1>
+<div class="content-section">
+  <table id="bookings_table" class="table table-hover">
+  <thead>
+      <tr>
+          <th>Film</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Guarantee</th>
+          <th>Percentage</th>
+          <th>Gross</th>
+          <th>Settled</th>
+          <th>Program</th>
+          <th>Distributor</th>
+          <th>Results</th>
+          <th>Add Payment</th>
+          <th>View Payments</th>
+          <th>Update</th>
+          <th>Delete</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for booking in bookings %}
+      <tr>
+          <td style="padding: 15px; text-align: left;">{{ booking.film }}</td>
+          <td style="padding: 15px; text-align: left;">{{ booking.start_date|datetimeformat }}</td>
+          <td style="padding: 15px; text-align: left;">{{ booking.end_date|datetimeformat }}</td>
+          <td style="padding: 15px; text-align: right;">{{ booking.guarantee|round(2, 'common')|format_currency }}</td>
+          <td style="padding: 15px; text-align: right;">{{ booking.percentage|format_percentage }}</td>
+          <td style="padding: 15px; text-align: right;">{{ booking.gross|round(2, 'common')|format_currency }}</td>
+          <td style="padding: 15px; text-align: left;">
+            {% if booking.settled %}
+            <p class="text-success">{{ booking.settled }}</p></td>
+            {% else %}
+            <p class="text-danger">{{ booking.settled }}</p></td>
+            {% endif %}
+          <td style="padding: 15px; text-align: left">{{ booking.program }}</td>
+          <td style="padding: 15px; text-align: left">{{ booking.distributor }}</td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('booking_bp.booking_results', id=booking.id) }}" class="table-link">Results</a></td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('payments_bp.new_payment', id=booking.id) }}" class="table-link">Add Payment</a></td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('payments_bp.view_payments', id=booking.id) }}" class="table-link">View Payment</a></td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('booking_bp.update_booking', id=booking.id) }}" class="table-link">Update</a></td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('booking_bp.delete_booking', id=booking.id) }}" class="table-link">Delete</a></td>
+          </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% endblock content %}

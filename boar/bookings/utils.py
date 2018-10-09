@@ -30,14 +30,14 @@ def results(id):
     booking = Booking.query.filter_by(id=id).first_or_404()
 
     film = booking.film
-    percentage = booking.percentage
+    percentage = (booking.percentage / 100)
     guarantee = booking.guarantee
     gross = booking.gross
 
     # overage
     def overage(percentage, guarantee, gross):
-        if (percentage / 100) * gross > guarantee:
-            overage = (percentage / 100) * gross - guarantee
+        if percentage * gross > guarantee:
+            overage = percentage * gross - guarantee
             return round(overage, 2)
         else:
             overage = 0
@@ -48,7 +48,7 @@ def results(id):
     # total owed
     def total_owed(guarantee, overage):
         owed = guarantee + overage
-        return owed
+        return round(owed, 2)
 
     owed = total_owed(guarantee, overage)
 
@@ -58,7 +58,7 @@ def results(id):
             net = 0
         else:
             net = gross - owed
-        return net
+        return round(net, 2)
 
     net = net(gross, owed)
 

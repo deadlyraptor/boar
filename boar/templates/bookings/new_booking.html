@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+  <div class="content-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">{% block legend %}{{ legend }}{% endblock %}</legend>
+        <!-- Film -->
+        <div class="form-group">
+          {{ form.film.label(class="form-control-label") }}
+          {% if form.film.errors %}
+            {{ form.film(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in form.film.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.film(class="form-control") }}
+          {% endif %}
+        </div>
+        <!-- Start Date -->
+        <div class="form-group">
+          {{ form.start_date.label(class="form-control-label") }}
+          {% if form.start_date.errors %}
+            {{ form.start_date(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in form.start_date.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.start_date(class="form-control") }}
+          {% endif %}
+        </div>
+        <!-- End Date -->
+        <div class="form-group">
+          {{ form.end_date.label(class="form-control-label") }}
+          {% if form.end_date.errors %}
+            {{ form.end_date(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in form.end_date.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.end_date(class="form-control") }}
+          {% endif %}
+        </div>
+        <!-- Guarantee -->
+        <div class="form-group">
+          {{ form.guarantee.label(class="form-control-label") }}
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+          {% if form.guarantee.errors %}
+            {{ form.guarantee(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in form.guarantee.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.guarantee(class="form-control") }}
+          {% endif %}
+          </div>
+        </div>
+        <!-- Percentage -->
+        <div class="form-group">
+          {{ form.percentage.label(class="form-control-label") }}
+          <div class="input-group">
+            {% if form.percentage.errors %}
+              {{ form.percentage(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+              {% for error in form.percentage.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+              </div>
+            {% else %}
+              {{ form.percentage(class="form-control") }}
+            {% endif %}
+            <div class="input-group-append">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+        <!-- Gross -->
+        <div class="form-group">
+          {{ form.gross.label(class="form-control-label") }}
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+          {% if form.gross.errors %}
+            {{ form.gross(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in form.gross.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.gross(class="form-control") }}
+          {% endif %}
+          </div>
+        </div>
+        <!-- Program -->
+        <div class="form-group">
+          {{ form.program.label(class="form-control-label") }}
+          {% if form.program.errors %}
+            {{ form.program(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in form.program.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.program(class="form-control") }}
+          {% endif %}
+        </div>
+        <!-- Distributor -->
+        <div class="form-group">
+          {{ form.distributor.label(class="form-control-label") }}
+          {% if form.distributor.errors %}
+            {{ form.distributor(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in form.distributor.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.distributor(class="form-control") }}
+          {% endif %}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+    </form>
+  </div>
+{% endblock content %}

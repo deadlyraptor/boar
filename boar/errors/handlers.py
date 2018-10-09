@@ -11,11 +11,11 @@ def not_found_error(error):
 
 
 @errors.app_errorhandler(403)
-def error_403(error):
+def forbidden_403(error):
     return render_template('errors/403.html'), 403
 
 
 @errors.app_errorhandler(500)
-def internal_error(error):
+def internal_server_error(error):
     db.session.rollback()
     return render_template('errors/500.html'), 500

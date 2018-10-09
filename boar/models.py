@@ -97,6 +97,45 @@ class Organization(db.Model):
         return f'{self.name}'
 
 
+class Booking(db.Model):
+    __tablename__ = 'bookings'
+
+    id = db.Column(db.Integer, primary_key=True)
+    film = db.Column(db.String, nullable=False)
+    start_date = db.Column(db.DateTime, nullable=False)
+    end_date = db.Column(db.DateTime, nullable=False)
+    guarantee = db.Column(db.Numeric, nullable=False)
+    percentage = db.Column(db.Numeric, nullable=False)
+    gross = db.Column(db.Numeric, nullable=False)
+    settled = db.Column(db.Boolean, default=0)
+
+    program_id = db.Column(db.Integer, db.ForeignKey('programs.id'))
+    distributor_id = db.Column(db.Integer, db.ForeignKey('distributors.id'))
+    organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+
+    payments = db.relationship('Payment', backref='booking', lazy=True)
+
+    def __repr__(self):
+        return f'<Booking {self.film} {self.start_date}>'
+
+    def __str__(self):
+        return f'{self.film}'
+
+
+class Payment(db.Model):
+    __tablename__ = 'payments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False)
+    check_number = db.Column(db.String, nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+
+    booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'))
+
+    def __repr__(self):
+        return f'<Payment {self.booking_id}>'
+
+
 class Program(db.Model):
     __tablename__ = 'programs'
 
@@ -142,42 +181,3 @@ class Distributor(db.Model):
 
     def __str__(self):
         return f'{self.company}'
-
-
-class Booking(db.Model):
-    __tablename__ = 'bookings'
-
-    id = db.Column(db.Integer, primary_key=True)
-    film = db.Column(db.String, nullable=False)
-    guarantee = db.Column(db.Integer, nullable=False)
-    percentage = db.Column(db.Integer, nullable=False)
-    start_date = db.Column(db.DateTime, nullable=False)
-    end_date = db.Column(db.DateTime, nullable=False)
-    gross = db.Column(db.Integer, nullable=False)
-    settled = db.Column(db.Boolean, default=0)
-
-    distributor_id = db.Column(db.Integer, db.ForeignKey('distributors.id'))
-    organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
-    program_id = db.Column(db.Integer, db.ForeignKey('programs.id'))
-
-    payments = db.relationship('Payment', backref='booking', lazy=True)
-
-    def __repr__(self):
-        return f'<Booking {self.film} {self.start_date}>'
-
-    def __str__(self):
-        return f'{self.film}'
-
-
-class Payment(db.Model):
-    __tablename__ = 'payments'
-
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False)
-    check_number = db.Column(db.String, nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
-
-    booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'))
-
-    def __repr__(self):
-        return f'<Payment {self.booking_id}>'

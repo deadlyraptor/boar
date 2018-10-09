@@ -26,9 +26,9 @@ def new_payment(id):
         db.session.add(payment)
         db.session.commit()
         flash('Payment entered successfully!')
-        return redirect(url_for('open_bookings'))
+        return redirect(url_for('booking_bp.list_bookings'))
     return render_template('/payment/payment.html', form=form,
-                           title='New Payment', heading='New Payment')
+                           title='New Payment', legend='New Payment')
 
 
 @payments_bp.route('/payments/<int:id>')
@@ -39,8 +39,8 @@ def view_payments(id):
     """
     payments = Payment.query.filter(Payment.booking_id == id).all()
     if not payments:
-        flash('No payments found!')
-        return redirect(url_for('open_bookings'))
+        flash('No payments found!', 'warning')
+        return redirect(url_for('booking_bp.list_bookings'))
     else:
         table = Payments(payments)
         return render_template('/table.html', table=table,
