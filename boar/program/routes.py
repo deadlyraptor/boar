@@ -46,9 +46,13 @@ def view_programs():
 
 @programs_bp.route('/programs/<int:id>', methods=['GET', 'POST'])
 @login_required
-def deactivate(id):
+def change_status(id):
     program = Program.query.filter_by(id=id).first_or_404()
-    program.active = 0
+    if program.active is True:
+        program.active = False
+        flash('Program successfully deactivated.', 'success')
+    else:
+        program.active = True
+        flash('Program successfully activated.', 'success')
     db.session.commit()
-    flash('Program successfully deactived.', 'success')
     return redirect(url_for('programs_bp.view_programs'))

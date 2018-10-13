@@ -8,7 +8,7 @@
       <tr>
           <th>Name</th>
           <th>Status</th>
-          <th>Deactivate</th>
+          <th>Activate/Deactivate</th>
       </tr>
   </thead>
   <tbody>
@@ -17,10 +17,11 @@
           <td style="padding: 15px; text-align: left;">{{ program.name }}</td>
           {% if program.active %}
           <td style="padding: 15px; text-align: left;" class="text-success">{{ program.active }}</p></td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('programs_bp.change_status', id=program.id) }}" class="table-link">Deactivate</a></td>
           {% else %}
           <td style="padding: 15px; text-align: left;" class="text-danger">{{ program.active }}</p></td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('programs_bp.change_status', id=program.id) }}" class="table-link">Activate</a></td>
           {% endif %}
-          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('programs_bp.deactivate', id=program.id) }}" class="table-link">Deactivate</a></td>
       </tr>
     {% endfor %}
   </tbody>
