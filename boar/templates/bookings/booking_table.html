@@ -31,12 +31,11 @@
           <td style="padding: 15px; text-align: right;">{{ booking.guarantee|round(2, 'common')|format_currency }}</td>
           <td style="padding: 15px; text-align: right;">{{ booking.percentage|format_percentage }}</td>
           <td style="padding: 15px; text-align: right;">{{ booking.gross|round(2, 'common')|format_currency }}</td>
-          <td style="padding: 15px; text-align: left;">
-            {% if booking.settled %}
-            <p class="text-success">{{ booking.settled }}</p></td>
-            {% else %}
-            <p class="text-danger">{{ booking.settled }}</p></td>
-            {% endif %}
+          {% if booking.settled %}
+          <td style="padding: 15px; text-align: left;" class="text-success">{{ booking.settled }}</td>
+          {% else %}
+          <td style="padding: 15px; text-align: left;" class="text-danger">{{ booking.settled }}</td>
+          {% endif %}
           <td style="padding: 15px; text-align: left">{{ booking.program }}</td>
           <td style="padding: 15px; text-align: left">{{ booking.distributor }}</td>
           <td style="padding: 15px; text-align: left;"><a href="{{ url_for('booking_bp.booking_results', id=booking.id) }}" class="table-link">Results</a></td>
