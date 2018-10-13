@@ -4,7 +4,6 @@ from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import login_required
 from ..models import Booking, Payment
 from .forms import PaymentForm
-from ..tables import Payments
 from boar import db
 
 payments_bp = Blueprint('payments_bp', __name__)
@@ -27,7 +26,7 @@ def new_payment(id):
         db.session.commit()
         flash('Payment entered successfully!')
         return redirect(url_for('booking_bp.list_bookings'))
-    return render_template('/payment/payment.html', form=form,
+    return render_template('/payments/new_payment.html', form=form,
                            title='New Payment', legend='New Payment')
 
 
@@ -42,6 +41,6 @@ def view_payments(id):
         flash('No payments found!', 'warning')
         return redirect(url_for('booking_bp.list_bookings'))
     else:
-        table = Payments(payments)
-        return render_template('/table.html', table=table,
-                               title='Payments', heading='Payments')
+        return render_template('/payments/payments_table.html',
+                               payments=payments, title='Payments',
+                               heading='Payments')

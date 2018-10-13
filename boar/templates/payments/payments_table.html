@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{% block heading %}{{ heading }}{% endblock %}</h1>
+<div class="content-section">
+  <table id="payments_table" class="table table-hover">
+  <thead>
+      <tr>
+          <th>Booking</th>
+          <th>Date</th>
+          <th>Check Number</th>
+          <th>Amount</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for payment in payments %}
+      <tr>
+          <td style="padding: 15px; text-align: left;">{{ payment.booking }}</td>
+          <td style="padding: 15px; text-align: left;">{{ payment.date|datetimeformat }}</td>
+          <td style="padding: 15px; text-align: left;">{{ payment.check_number }}</td>
+          <td style="padding: 15px; text-align: right;">{{ payment.amount|round(2, 'common')|format_currency }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% endblock content %}
