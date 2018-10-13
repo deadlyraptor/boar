@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='custom.css') }}" />
 
     {% if title %}
       <title>{{ title }} - Boar</title>
@@ -16,41 +17,41 @@
   </head>
   <body>
     <!-- Navigation Bar -->
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
+      <nav class="navbar navbar-expand-md fixed-top">
       <div class="container">
         <a class="navbar-brand mr-4" href="/">Boar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="container navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <div class="dropdown">
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <ul class="navbar-nav mr-auto">
+              <li class="dropdown">
                 <a class="nav-item nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Bookings
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item nav-item nav-link" href="{{ url_for('booking_bp.new_booking') }}">New Booking</a>
-                  <a class="dropdown-item nav-item nav-link" href="{{ url_for('booking_bp.open_bookings') }}">Open Bookings</a>
-                </div>
-              </div>
-              <div class="dropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="dropdown-item nav-item nav-link" href="{{ url_for('booking_bp.new_booking') }}">New Booking</a></li>
+                  <li><a class="dropdown-item nav-item nav-link" href="{{ url_for('booking_bp.list_bookings') }}">Bookings</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
                 <a class="nav-item nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Distributors
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="nav-item nav-link" href="{{ url_for('distributors_bp.new_distributor') }}">New Distributor</a>
-                  <a class="nav-item nav-link" href="{{ url_for('distributors_bp.list_distributors') }}">Distributors</a>
-                </div>
-              </div>
-              <div class="dropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="nav-item nav-link" href="{{ url_for('distributors_bp.new_distributor') }}">New Distributor</a></li>
+                  <li><a class="nav-item nav-link" href="{{ url_for('distributors_bp.list_distributors') }}">Distributors</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
                 <a class="nav-item nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Programs
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="nav-item nav-link" href="{{ url_for('programs_bp.new_program') }}">New Program</a>
-                  <a class="nav-item nav-link" href="{{ url_for('programs_bp.view_programs') }}">View Programs</a>
-                </div>
-              </div>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="nav-item nav-link" href="{{ url_for('programs_bp.new_program') }}">New Program</a></li>
+                  <li><a class="nav-item nav-link" href="{{ url_for('programs_bp.view_programs') }}">View Programs</a></li>
+                </ul>
+              </ul>
             </div>
             <!-- Navbar Right Side-->
             <div class="navbar-nav">
@@ -68,17 +69,17 @@
       </nav>
       <main role="main" class="container">
         <div class="row">
-          <div class="col-md-8">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                {% for category, message in messages %}
-                  <div class='alert alert-{{ category }}'>
-                    {{ message }}
-                  </div>
-                {% endfor %}
-              {% endif %}
-            {% endwith %}
-            {% block content %}{% endblock content %}
+          <div>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class='alert alert-{{ category }}'>
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          {% block content %}{% endblock content %}
           </div>
         </div>
       </main>

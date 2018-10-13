@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock title %}
+{% block content %}
+<h1>{% block heading %}{{ heading }}{% endblock heading %}</h1>
+<div class="content-section">
+  <table id="results_table" class="table table-hover">
+    <thead>
+      <tr>
+        <th>Film</th>
+        <th>Gross</th>
+        <th>Guarantee</th>
+        <th>Overage</th>
+        <th>Owed</th>
+        <th>Net</th>
+      </tr>
+    </thead>
+    </tbody>
+    {% for item in finances %}
+    <tr>
+      <td style="padding: 15px; text-align: left;"> {{ item['film'] }}</td>
+      <td style="padding: 15px; text-align: right;"> {{ item['gross']|round(2, 'common')|format_currency }}</td>
+      <td style="padding: 15px; text-align: right;"> {{ item['guarantee']|round(2, 'common')|format_currency }}</td>
+      <td style="padding: 15px; text-align: right;"> {{ item['overage']|round(2, 'common')|format_currency }}</td>
+      <td style="padding: 15px; text-align: right;"> {{ item['owed']|round(2, 'common')|format_currency }}</td>
+      <td style="padding: 15px; text-align: right;"> {{ item['net']|round(2, 'common')|format_currency }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock content %}

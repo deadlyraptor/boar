@@ -5,7 +5,6 @@ from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from ..models import Booking
 from .forms import BookingForm
-from ..tables import Bookings, Results
 from boar import db
 from boar.bookings.utils import results
 
@@ -83,10 +82,9 @@ def list_bookings():
         flash('No open bookings found.', 'warning')
         return redirect(url_for('main.index'))
     else:
-        table = Bookings(bookings)
         return render_template('/bookings/booking_table.html',
-                               bookings=bookings, table=table,
-                               title='Bookings', heading='Bookings')
+                               bookings=bookings, title='Bookings',
+                               heading='Bookings')
 
 
 @booking_bp.route('/booking/results/<int:id>', methods=['GET'])
@@ -100,6 +98,5 @@ def booking_results(id):
         flash('No booking found!')
         return redirect(url_for('booking_bp.list_bookings'))
     else:
-        table = Results(finances)
-        return render_template('table.html', table=table,
+        return render_template('/bookings/results.html', finances=finances,
                                title='Results', heading='Results')

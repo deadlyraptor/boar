@@ -1,0 +1,27 @@
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+  background-color: #f1f3f5;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: auto;
+}
+
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.table-link {
+  font-size: 14px;
+  color: #0954ab;
+}

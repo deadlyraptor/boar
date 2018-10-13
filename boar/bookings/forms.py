@@ -19,5 +19,5 @@ class BookingForm(FlaskForm):
     program = QuerySelectField(query_factory=query_programs,
                                allow_blank=False, get_label='name')
     distributor = QuerySelectField(query_factory=query_distributors,
-                                   allow_blank=False, get_label='company')
+                                   allow_blank=True, get_label='company')
     submit = SubmitField('Submit')

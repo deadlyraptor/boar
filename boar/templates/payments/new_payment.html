@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+  <div class="content-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">
+          {% block legend %}{{ legend }}{% endblock legend %}
+        </legend>
+        <div class="form-group">
+          <!-- Film -->
+          {{ form.film.label(class="form-control-label") }}
+          {% if form.film.errors %}
+            {{ form.film(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.film(class="form-control") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <!-- Date -->
+          {{ form.date.label(class="form-control-label") }}
+          {% if form.date.errors %}
+            {{ form.date(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.date(class="form-control") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <!-- Check Number -->
+          {{ form.check_number.label(class="form-control-label") }}
+          {% if form.check_number.errors %}
+            {{ form.check_number(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.check_number(class="form-control") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <!-- Amount -->
+          {{ form.amount.label(class="form-control-label") }}
+          {% if form.amount.errors %}
+            {{ form.amount(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+            {% for error in errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+          {% else %}
+            {{ form.amount(class="form-control") }}
+          {% endif %}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form. submit(class="btn btn-outline-info") }}
+      </div>
+    </form>
+  </div>
+{% endblock %}
