@@ -35,7 +35,7 @@ def register():
         db.session.commit()
         flash('Your account has been created! You are now able to log in.',
               'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('users.login'))
     return render_template('/user/register.html', title='Register',
                            registration_form=registration_form,
                            organization_form=organization_form)
@@ -47,7 +47,7 @@ def login():
             return redirect(url_for('main.index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             flash(f'You have logged in!', 'success')
@@ -55,7 +55,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('main.index'))
         else:
             flash('Invalid username or password', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('users.login'))
     return render_template('/user/login.html', title='Login', form=form)
 
 
@@ -123,7 +123,7 @@ def reset_token(token):
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid or expired token', 'warning')
-        return redirect(url_for('reset_request'))
+        return redirect(url_for('users.reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user.set_password(form.password.data)

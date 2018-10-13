@@ -5,6 +5,7 @@
       {{ registration_form.hidden_tag() }}
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">Register</legend>
+        <!-- Username -->
         <div class="form-group">
           {{ registration_form.username.label(class="form-control-label") }}
           {% if registration_form.username.errors %}
@@ -18,6 +19,7 @@
             {{ registration_form.username(class="form-control") }}
           {% endif %}
         </div>
+        <!-- Email -->
         <div class="form-group">
           {{ registration_form.email.label(class="form-control-label") }}
           {% if registration_form.email.errors %}
@@ -31,6 +33,7 @@
             {{ registration_form.email(class="form-control") }}
           {% endif %}
         </div>
+        <!-- First Name -->
         <div class="form-group">
           {{ registration_form.first_name.label(class="form-control-label") }}
           {% if registration_form.first_name.errors %}
@@ -44,6 +47,7 @@
             {{ registration_form.first_name(class="form-control") }}
           {% endif %}
         </div>
+        <!-- Last Name -->
         <div class="form-group">
           {{ registration_form.last_name.label(class="form-control-label") }}
           {% if registration_form.last_name.errors %}
@@ -57,6 +61,7 @@
             {{ registration_form.last_name(class="form-control") }}
           {% endif %}
         </div>
+        <!-- Password -->
         <div class="form-group">
           {{ registration_form.password.label(class="form-control-label") }}
           {% if registration_form.password.errors %}
@@ -70,6 +75,7 @@
             {{ registration_form.password(class="form-control")}}
           {% endif %}
         </div>
+        <!-- Confirm Password -->
         <div class="form-group">
           {{ registration_form.confirm_password.label(class="form-control-label") }}
           {% if registration_form.confirm_password.errors %}
@@ -83,6 +89,7 @@
             {{ registration_form.confirm_password(class="form-control")}}
           {% endif %}
         </div>
+        <!-- Organization -->
         <div class="form-group">
           {{ organization_form.name.label(class="form-control-label") }}
           {% if organization_form.name.errors %}

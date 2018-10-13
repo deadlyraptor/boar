@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div>
+  <div class="container">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">Log In</legend>
         <div class="form-group">
-        {{ form.username.label(class="form-control-label") }}
-        {% if form.username.errors %}
-          {{ form.username(class="form-control is-invalud") }}
-          <div class="invalid-feedback">
-            {% for error in form.username.errors %}
+          <!-- Email -->
+          {{ form.email.label(class="form-control-label") }}
+          {% if form.email.errors %}
+            {{ form.email(class="form-control is-invalud") }}
+            <div class="invalid-feedback">
+            {% for error in form.email.errors %}
               <span>{{ error }}</span>
             {% endfor %}
-          </div>
-        {% else %}
-          {{ form.username(class="form-control") }}
-        {% endif %}
+            </div>
+          {% else %}
+            {{ form.email(class="form-control") }}
+          {% endif %}
         </div>
+        <!-- Password -->
         <div class="form-group">
           {{ form.password.label(class="form-control-label") }}
           {% if form.password.errors %}
@@ -34,6 +36,7 @@
         <div class="form-check">
           {{ form.remember_me(class="form-check-input") }}
           {{ form.remember_me.label(class="form-check-label") }}
+        </div>
       </fieldset>
       <div class="form-group">
         {{ form.submit(class="btn btn-outline-info")}}

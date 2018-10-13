@@ -9,7 +9,7 @@ from ..models import Organization, User
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired()])
+    email = StringField('Email', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Login')
@@ -19,7 +19,7 @@ class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
     email = StringField('Email', validators=[InputRequired(), Email()])
     first_name = StringField('First Name', validators=[InputRequired()])
-    last_name = StringField('First Name', validators=[InputRequired()])
+    last_name = StringField('Last Name', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[InputRequired(),
