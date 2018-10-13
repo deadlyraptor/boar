@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{% block heading %}{{ heading }}{% endblock %}</h1>
+<div class="content-section">
+  <table id="distributors_table" class="table table-hover">
+  <thead>
+      <tr>
+          <th>Company</th>
+          <th>Payee</th>
+          <th>Address Line 1</th>
+          <th>Address Line 2</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Zip</th>
+          <th>Update</th>
+          <th>Delete</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for distributor in distributors %}
+      <tr>
+          <td style="padding: 15px; text-align: left;">{{ distributor.company }}</td>
+          <td style="padding: 15px; text-align: left;">{{ distributor.payee }}</td>
+          <td style="padding: 15px; text-align: left;">{{ distributor.address1 }}</td>
+          <td style="padding: 15px; text-align: left;">{{ distributor.address2 }}</td>
+          <td style="padding: 15px; text-align: left;">{{ distributor.city }}</td>
+          <td style="padding: 15px; text-align: left;">{{ distributor.state }}</td>
+          <td style="padding: 15px; text-align: left;">{{ distributor.zip }}</td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('distributors_bp.update_distributor', id=distributor.id) }}" class="table-link">Update</a></td>
+          <td style="padding: 15px; text-align: left;"><a href="{{ url_for('distributors_bp.delete_distributor', id=distributor.id) }}" class="table-link">Delete</a></td>
+          </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% endblock content %}
