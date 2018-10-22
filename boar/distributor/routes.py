@@ -2,9 +2,9 @@
 
 from flask import Blueprint, flash, render_template, redirect, url_for
 from flask_login import login_required, current_user
-from ..models import Distributor
-from .forms import DistributorForm
 from boar import db
+from boar.models import Distributor
+from boar.distributor.forms import DistributorForm
 
 distributors_bp = Blueprint('distributors_bp', __name__)
 

@@ -2,9 +2,9 @@
 
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import login_required
-from ..models import Booking, Payment
-from .forms import PaymentForm
 from boar import db
+from boar.models import Booking, Payment
+from boar.payment.forms import PaymentForm
 
 payments_bp = Blueprint('payments_bp', __name__)
 

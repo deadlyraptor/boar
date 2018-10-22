@@ -3,9 +3,10 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from boar import db
-from ..models import Organization, User
-from .forms import (LoginForm, OrganizationForm, RegistrationForm,
-                    RequestResetForm, ResetPasswordForm, UpdateAccountForm)
+from boar.models import Organization, User
+from boar.user.forms import (LoginForm, OrganizationForm, RegistrationForm,
+                             RequestResetForm, ResetPasswordForm,
+                             UpdateAccountForm)
 from boar.user.utils import save_picture, send_reset_email
 
 

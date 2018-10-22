@@ -1,9 +1,9 @@
 # models.py
 
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from boar import db, login
 
 

@@ -3,9 +3,9 @@
 import decimal
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
-from ..models import Booking
-from .forms import BookingForm
 from boar import db
+from boar.models import Booking
+from boar.bookings.forms import BookingForm
 from boar.bookings.utils import results
 
 booking_bp = Blueprint('booking_bp', __name__)

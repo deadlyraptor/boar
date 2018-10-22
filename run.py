@@ -1,6 +1,6 @@
 # run.py
 
-from boar import create_app  # , db
+from boar import create_app
 
 app = create_app()
 

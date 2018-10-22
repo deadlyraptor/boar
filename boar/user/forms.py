@@ -2,10 +2,10 @@
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
+from flask_login import current_user
 from wtforms import BooleanField, PasswordField, StringField, SubmitField
 from wtforms.validators import Email, EqualTo, InputRequired, ValidationError
-from flask_login import current_user
-from ..models import Organization, User
+from boar.models import Organization, User
 
 
 class LoginForm(FlaskForm):

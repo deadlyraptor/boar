@@ -1,5 +1,5 @@
 from flask_login import current_user
-from ..models import Booking, Distributor, Program
+from boar.models import Booking, Distributor, Program
 
 
 def query_distributors():

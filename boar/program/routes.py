@@ -2,9 +2,9 @@
 
 from flask import Blueprint, flash, render_template, redirect, url_for
 from flask_login import login_required, current_user
-from ..models import Program
-from .forms import ProgramForm
 from boar import db
+from boar.models import Program
+from boar.program.forms import ProgramForm
 
 programs_bp = Blueprint('programs_bp', __name__)
 
